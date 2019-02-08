@@ -1,0 +1,21 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using BehdadNematiFinalWebProject.Models;
+@model List<product>
+<table class="table-bordered">
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="1" />
+                        <label class="form-check-label">@item.EnglishName</label>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>

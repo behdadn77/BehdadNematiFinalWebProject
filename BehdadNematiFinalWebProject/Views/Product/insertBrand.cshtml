@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "insertBrand";
+}
+
+<h2>insertBrand</h2>
+
+@using BehdadNematiFinalWebProject.Models.viewModels
+@model brandViewModels
+
+<div class="container">
+    <form asp-action="insertBrandConfirm">
+        <div class="form-group">
+            <input class="custom-file-input" asp-for="name" />
+            <label class="custom-file-label">Choose product image...</label>
+            <span asp-validation-for="name"></span>
+        </div>
+    </form>
+</div>

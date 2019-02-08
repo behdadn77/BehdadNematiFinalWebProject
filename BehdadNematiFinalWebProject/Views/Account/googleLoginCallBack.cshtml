@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewData["Title"] = "googleLoginCallBackk";
+}
+@using BehdadNematiFinalWebProject.Models.viewModels
+@model regiserUserWithGoogleViewModels
+
+<h2>googleLoginCallBackk</h2>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Brand</title>
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="~/Assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="~/Assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aclonica">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Actor">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Adamina">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Advent+Pro">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aguafina+Script">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Akronim">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aladin">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alef">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alegreya">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alegreya+Sans">
+    <link rel="stylesheet" href="~/Assets/css/Footer-Clean.css">
+    <link rel="stylesheet" href="~/Assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
+    <link rel="stylesheet" href="~/Assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="~/Assets/css/Simple-Slider.css">
+    <link rel="stylesheet" href="~/Assets/css/untitled.css">
+</head>
+
+<body>
+    <main class="page registration-page"></main>
+    <div class="login-dark" style="background-image:url(&quot;~/Assets/img/ja-ma-216495-unsplash.jpg&quot;);height:900px;width:1550px;margin:-4px;padding:28px;">
+        <label class="align-content-center align-self-center" style="font-family:Akronim, cursive;font-size:82px;color:rgb(177,192,206);">BehdadNematiFinalWebProject</label>
+        <form asp-action="regiserUserWithGoogle" asp-controller="Account" method="post">
+            <h2 class="sr-only">Login Form</h2><label style="font-family:Actor, sans-serif;font-size:28px;">Create account</label>
+            <div class="form-group"><input class="form-control" asp-for="name" readonly="readonly"></div>
+            <div class="form-group"><input class="form-control" asp-for="lastname" readonly="readonly"></div>
+            <div class="form-group"><input class="form-control" asp-for="username" placeholder="username" readonly="readonly"></div>
+            <div class="form-group"><input class="form-control" type="password" asp-for="password" placeholder="Password"><span asp-validation-for="password"></span></div>
+            <div class="form-group"><input class="form-control" type="password" asp-for="passwordConfirm" placeholder="PasswordConfirm"><span asp-validation-for="passwordConfirm"></span></div>
+            <button class="btn btn-primary">Signup</button>
+        </form>
+    </div>
+    <script src="~/Assets/js/jquery.min.js"></script>
+    <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Assets/js/theme.js"></script>
+    <script src="~/Assets/js/bs-animation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+    <script src="~/Assets/js/Simple-Slider.js"></script>
+</body>
+
+</html>
+
+
+@*<div class="container col-md-4" style="border:2px solid green;border-radius:10px;padding:10px">
+        <form asp-action="registeruser" asp-controller="Account">
+            <div class="form-group">
+                <label asp-for="username"></label>
+                <input class="form-control" asp-for="username" readonly="readonly" />
+            </div>
+            <div class="form-group">
+                <label asp-for="name"></label>
+                <input class="form-control" asp-for="name" />
+                <span asp-validation-for="name"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="lastname"></label>
+                <input class="form-control" asp-for="lastname" />
+                <span asp-validation-for="lastname"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="password"></label>
+                <input class="form-control" asp-for="password" />
+                <span asp-validation-for="password"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="passwordConfirm"></label>
+                <input class="form-control" asp-for="passwordConfirm" />
+                <span asp-validation-for="passwordConfirm"></span>
+            </div>
+            <button class="btn btn-success">Register</button>
+        </form>
+    </div>*@

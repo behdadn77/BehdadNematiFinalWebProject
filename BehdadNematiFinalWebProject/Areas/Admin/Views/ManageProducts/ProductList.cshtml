@@ -1,0 +1,77 @@
+﻿
+<h2>ProductList</h2>
+<a class="btn btn-success" asp-area="admin" asp-action="addproduct" asp-controller="manageProducts">Add Products</a>
+<hr />
+<div class="row">
+    <div class="form-group" style="padding-right:10px;">
+        <select id="comboSelectProductType" class="form-control">
+            <option value="" selected="selected">--Catagories--</option>
+        </select>
+    </div>
+    <div class="form-group" style="padding-right:10px;">
+        <select id="comboSelectProductBrand" class="form-control">
+            <option value="" selected="selected">--Brands--</option>
+        </select>
+    </div>
+    <div class="form-group" style="padding-right:10px;">
+        <input class="form-control" id="txtSearch" placeholder="Search" />
+    </div>
+    <button class="btn btn-info" id="btnSearch" style="margin-bottom:20px;">Search 🔍</button>
+</div>
+<div class="container col-md-12">
+    <table class="table table-bordered solid">
+        <thead>
+            <tr>
+                <td>Product id</td>
+                <td>English Name</td>
+                <td>Arabic Name</td>
+                <td>Price</td>
+                <td>Available Count in Storage</td>
+                <td>Catagory</td>
+                <td>Brand</td>
+                <td>Product Image</td>
+                <td>Edit Product</td>
+                <td>Delete Product</td>
+            </tr>
+        </thead>
+        <tbody id="tblProductsBody"></tbody>
+    </table>
+    
+</div>
+<script>
+    $(function () {
+        $.post('/admin/ManageProducts/ProductBrandComboItems', function (data) {
+            $(comboSelectProductBrand).append(data);
+        })
+        $.post('/admin/ManageProducts/ProductTypeComboItems', function (data) {
+            $(comboSelectProductType).append(data);
+        })
+        
+
+
+        function Load() {
+            
+            $.post('/admin/ManageProducts/ProductListItems', {
+                Search: $(txtSearch).val(),
+                TypeId: $(comboSelectProductType).val(),
+                BrandId: $(comboSelectProductBrand).val(),
+            }, function (data) {
+                $(tblProductsBody).html(data);
+            })
+        }
+        $(document).ready(function () {
+            Load()
+        })
+        $(comboSelectProductBrand).change(function () {
+            Load()
+        })
+        $(comboSelectProductType).change(function () {
+            Load()
+        })
+        
+        $(btnSearch).click(function () {
+            Load();
+        })
+    })
+
+</script>

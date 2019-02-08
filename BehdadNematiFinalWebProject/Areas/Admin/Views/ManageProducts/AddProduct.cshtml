@@ -1,0 +1,84 @@
+﻿
+@using BehdadNematiFinalWebProject.Models.viewModels;
+@model ProductViewModel;
+<h2>Add Product</h2>
+
+<div class="container offset-md-3 col-md-6">
+
+    <form asp-action="AddProductConfirm" asp-controller="ManageProducts" asp-area="admin" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input class="form-control" asp-for="EnglishName" placeholder="Product English Name" />
+            <span asp-validation-for="EnglishName"></span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" asp-for="price" placeholder="Product Price" />
+            <span asp-validation-for="price"></span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" asp-for="count" placeholder="Available Product Count in Storage" />
+            <span asp-validation-for="count"></span>
+        </div>
+        <div class="form-group">
+            <select asp-for="productType_Id" id="comboSelectProductType" class="form-control">
+                <option value="" selected="selected">--Select Product Type--</option>
+            </select>
+            <span asp-validation-for="productType_Id"></span>
+        </div>
+        <div class="form-group">
+            <select asp-for="brand_Id" id="comboSelectProductBrand" class="form-control">
+                <option value="" selected="selected">--Select Product Brand--</option>
+            </select>
+            <span asp-validation-for="brand_Id"></span>
+        </div>
+        <div id="imgGalary">
+        </div>
+        <div id="FileInputs">
+            <div style="border:2px solid blue; margin-top:4px; margin-bottom:4px; padding:4px;">
+                <button type="button" class="btn btn-danger" id="btnRmv">Remove</button>
+                <div class="custom-file">
+                    <input class="custom-file-input" asp-for="Pictures" />
+                    <label class="custom-file-label">Choose...</label>
+                </div>
+                <span asp-validation-for="Pictures"></span>
+                <img id="imgPreview" width="60" height="60" style="margin-top:10px; margin-bottom:10px; border-radius:30%" />
+            </div>
+        </div>
+        <button name="Pictures" type="button" id="addMoreImgBtn" class="btn btn-primary" style="margin-bottom:6px;margin-top:6px;">+Add more Images</button>
+        <br />
+        <button class="btn btn-success">Add Product</button>
+    </form>
+</div>
+<script>
+    $(function () {
+        $.post('/admin/ManageProducts/ProductTypeComboItems', function (data) {
+            $(comboSelectProductType).append(data);
+        })
+        $.post('/admin/ManageProducts/ProductBrandComboItems', function (data) {
+            $(comboSelectProductBrand).append(data);
+        })
+        $(addMoreImgBtn).click(function () {
+            $(FileInputs).append(`
+            <div style="border:2px solid blue; margin-top:4px; margin-bottom:4px; padding:4px;">
+                <div class="custom-file">
+                    <input class="custom-file-input" asp-for="Pictures" />
+                    <label class="custom-file-label">Choose...</label>
+                </div>
+                <button type="button" class="btn btn-danger" id="btnRmv">Remove</button>
+            </div>
+            `);
+        });
+        $('#FileInputs').on("click", "btnRmv", function () {
+            $(this).parent().remove();
+        });
+        $(function () {
+            $('#imgInput').change(function () {
+                var reader = new FileReader();
+                reader.readAsDataURL(this.files[0]);
+                reader.onload = function (e) {
+                    document.getElementById('imgPreview').src = e.target.result;
+                }
+            })
+        })
+
+    })
+</script>

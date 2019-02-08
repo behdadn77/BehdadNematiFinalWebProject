@@ -1,0 +1,48 @@
+﻿
+@using BehdadNematiFinalWebProject.Models.viewModels;
+@model ProductViewModel;
+
+<h2>Edit Product</h2>
+
+<div class="container offset-md-3 col-md-6">
+
+    <form asp-action="EditProductConfirm" asp-controller="ManageProducts" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input class="form-control" asp-for="EnglishName" placeholder="Product English Name" />
+            <span asp-validation-for="EnglishName"></span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" asp-for="price" placeholder="Product Price" />
+            <span asp-validation-for="price"></span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" asp-for="count" placeholder="Available Product Count in Storage" />
+            <span asp-validation-for="count"></span>
+        </div>
+        <div class="form-group">
+            <select asp-for="productType_Id" id="comboSelectProductType" class="form-control"></select>
+            <span asp-validation-for="productType_Id"></span>
+        </div>
+        <div class="form-group">
+            <select asp-for="brand_Id" id="comboSelectProductBrand" class="form-control"></select>
+            <span asp-validation-for="brand_Id"></span>
+        </div>
+        <input type="hidden" asp-for="id" />
+        <button class="btn btn-primary">Save changes</button>
+    </form>
+</div>
+<script>
+    $(function () {
+        $.post('/admin/ManageProducts/ProductTypeComboItems', function (data) {
+            $(comboSelectProductType).append(data);
+        }).done(function () {
+                $(comboSelectProductType).val(@Model.productType_Id);
+            })
+        $.post('/admin/ManageProducts/ProductBrandComboItems', function (data) {
+            $(comboSelectProductBrand).append(data);
+        }).done(function () {
+            $(comboSelectProductBrand).val(@Model.brand_Id);
+        })
+
+    })
+</script>

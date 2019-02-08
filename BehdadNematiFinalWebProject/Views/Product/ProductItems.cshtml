@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using BehdadNematiFinalWebProject.Models.viewModels
+@model List<ShowProductViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="clean-product-item">
+            @foreach (var ittem in item.images)
+            {
+                <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="@($"data:image/jpeg;base64,{Convert.ToBase64String(ittem.img)}")"></a></div>
+            }
+            <div class="product-name"><a href="#">@item.EnglishName</a></div>
+            <div class="about">
+                <div class="rating"><img src="~/Assets/img/star.svg"><img src="~/Assets/img/star.svg"><img src="~/Assets/img/star.svg"><img src="~/Assets/img/star-half-empty.svg"></div>
+                <div class="price">
+                    <h3>@item.price</h3>
+                </div>
+            </div>
+            @if (item.SelectedInCart !=true)
+            {
+            <button class="btn btn-primary" type="button" id="addprd" product_id="@item.Id"><i class="icon-basket"></i>Add to Cart</button>
+            }
+        </div>
+    </div>
+}

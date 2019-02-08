@@ -1,0 +1,272 @@
+﻿
+@{
+    ViewData["Title"] = "showPurchaseCart";
+}
+
+@using BehdadNematiFinalWebProject.Models
+@model List<purchaseCart_product>
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Brand</title>
+    <link rel="stylesheet" href="~/Assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="~/Assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="~/Assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aclonica">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Actor">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Adamina">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Advent+Pro">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aguafina+Script">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Akronim">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aladin">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alef">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alegreya">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alegreya+Sans">
+    <link rel="stylesheet" href="~/Assets/css/Footer-Clean.css">
+    <link rel="stylesheet" href="~/Assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
+    <link rel="stylesheet" href="~/Assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="~/Assets/css/Simple-Slider.css">
+    <link rel="stylesheet" href="~/Assets/css/untitled.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background-color:rgb(0,76,152);">
+        <div class="container">
+            <a class="navbar-brand logo" href="index.html" style="font-family:Akronim, cursive;">BehdadNematiFinalWebProject</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1"></div>
+        </div>
+    </nav>
+
+
+
+        <h4>
+            Your shopping cart contains:
+            <span id="totalCount"></span>
+        </h4>
+            <table class="timetable_sub table-bordered table-striped " style="margin-top:200pt" >
+                <thead>
+                    <tr>
+                        <th>SL No.</th>
+                        <th>Product</th>
+                        <th>Quality</th>
+                        <th>Product Name</th>
+
+                        <th>Price</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+
+                        <tr class="rem1">
+                            <td class="invert">1</td>
+                            @foreach (var ittem in item.product.images)
+                            {
+                                <td class="invert-image">
+                                    <a href="single2.html">
+                                        <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(ittem.img)}")" alt=" " class="img-responsive">
+                                    </a>
+                                </td>
+                            }
+                            <td class="invert">
+                                <div class="quantity">
+                                    <div class="quantity-select">
+                                        <div class="entry value-minus" prchsCartPrductId="@item.Id">&nbsp;</div>
+                                        <div class="entry value">
+                                            <span>@item.count</span>
+                                        </div>
+                                        <div class="entry value-plus active" prchsCartPrductId="@item.Id">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="invert">@item.product.EnglishName</td>
+                            <td class="invert">@item.product.price</td>
+                            <td class="invert">
+                                <div class="rem">
+                                    <div class="close1" prchsCartPrductId="@item.product_Id" id="removeProductFromPrchscart"> </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+
+    @*<main class="page shopping-cart-page">
+            <section class="clean-block clean-cart dark">
+                <div class="container">
+                    <div class="block-heading">
+                        <h2 class="text-info">Shopping Cart</h2>
+                    </div>
+                    <h4>
+                        Your shopping cart contains:
+                        <span id="totalCount"></span>
+                    </h4>
+                    <div class="content">
+
+                        <div class="row no-gutters">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-md-12 col-lg-8">
+                                    <div class="items">
+                                        <div class="product">
+                                            <div class="row justify-content-center align-items-center">
+                                                @foreach (var ittem in item.product.images)
+                                                {
+                                                    <div class="col-md-3">
+                                                        <div class="product-image"><img class="img-fluid d-block mx-auto image" src="@($"data:image/jpeg;base64,{Convert.ToBase64String(ittem.img)}")"></div>
+                                                    </div>
+                                                }
+                                                <div class="col-md-5 product-info">
+                                                    <a href="#" class="product-name">@item.product.EnglishName</a>
+                                                    <div class="product-specs">
+                                                        <div><span>Display:&nbsp;</span><span class="value">properties</span></div>
+                                                        <div><span>RAM:&nbsp;</span><span class="value">properties</span></div>
+                                                        <div><span>Memory:&nbsp;</span><span class="value">properties</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="quantity-select">
+                                                    <div class="entry value-minus" prchsCartPrductId="@item.Id">&nbsp;</div>
+                                                    <div class="entry value">
+                                                        <span>@item.count</span>
+                                                    </div>
+                                                    <div class="entry value-plus active" prchsCartPrductId="@item.Id">&nbsp;</div>
+                                                </div>
+                                                <div class="col-6 col-md-2 price"><span>@item.product.price</span></div>
+                                                <div class="rem">
+                                                    <div class="close1" prchsCartPrductId="@item.product_Id" id="removeProductFromPrchscart"> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="col-md-12 col-lg-4">
+                                <div class="summary">
+                                    <h3>Summary</h3>
+                                    <h4><span class="text">Subtotal</span><span class="price" id="totalPrice"></span></h4>
+                                    <h4><span class="text">Discount</span><span class="price">$0</span></h4>
+                                    <h4><span class="text">Shipping</span><span class="price">$0</span></h4>
+                                    <h4><span class="text">Total</span><span class="price">$360</span></h4><button class="btn btn-primary btn-block btn-lg" type="button">Checkout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>*@
+    <footer class="page-footer dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5>Get started</h5>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Sign up</a></li>
+                        <li><a href="#">Downloads</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h5>About us</h5>
+                    <ul>
+                        <li><a href="#">Company Information</a></li>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h5>Support</h5>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help desk</a></li>
+                        <li><a href="#">Forums</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h5>Legal</h5>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2018 Copyright Text</p>
+        </div>
+    </footer>
+    <script src="~/Assets/js/jquery.min.js"></script>
+    <script src="~/Assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Assets/js/theme.js"></script>
+    <script src="~/Assets/js/bs-animation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+    <script src="~/Assets/js/Simple-Slider.js"></script>
+
+    <script>
+        $('.value-plus').on('click', function () {
+            var divUpd = $(this).parent().find('.value');
+            var prchsCartPrductId = $(this).attr(prchsCartPrductId);
+            $.post('/PurchaseCart/increasePrdtCountPurchaseCart', { prchsCartPrductId: prchsCartPrductId }, function (value) {
+                if (typeof value != 'boolean') {
+                    $(totalPrice).html(`${value.totalPrice}`)
+                    $(totalCount).html(`${value.count}`)
+                    $(divUpd).html(value.prdt.count);
+                }
+            });
+        });
+
+        $('.value-minus').on('click', function () {
+            var divUpd = $(this).parent().find('.value'),
+            var prchsCartPrductId = $(this).attr(prchsCartPrductId);
+            if (divUpd != 1) {
+                $.post('/PurchaseCart/decreasePrdtCountPurchaseCart', { prchsCartPrductId: prchsCartPrductId }, function (value) {
+                    if (typeof value != 'boolean') {
+                        $(totalPrice).html(`${value.totalPrice}`)
+                        $(totalCount).html(`${value.count}`)
+                        $(divUpd).html(value.prdt.count);
+                    }
+                });
+            }
+        });
+
+        $(document).ready(function (c) {
+            $('.close1').on('click', function (c) {
+                var btn = $(this);
+                prchsCartPrductId = $(this).attr('prchsCartPrductId');
+                $.post('/PurchaseCart/removeFromCart', { prchsCartPrductId: prchsCartPrductId }, function (value) {
+                    if (typeof value != 'boolean') {
+                        $(btn).parents('.rem1').fadeOut('slow', function (c) {
+                            $(this).remove();
+                        });
+                        $(totalCount).html(`${value.count} product`)
+                        $(totalPrice).html(`${value.totalPrice}`)
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>
