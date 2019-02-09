@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BehdadNematiFinalWebProject.Areas.Identity.Data;
 using BehdadNematiFinalWebProject.Models;
-using BehdadNematiFinalWebProject.Models.viewModels;
+using BehdadNematiFinalWebProject.Models.ViewModels;
 
 namespace BehdadNematiFinalWebProject.Controllers
 {
@@ -30,7 +30,7 @@ namespace BehdadNematiFinalWebProject.Controllers
             return View();
         }
         [Authorize]
-        public async Task<IActionResult> insertComfirm(productViewModels model , IFormFile img)
+        public async Task<IActionResult> insertComfirm(ProductViewModel model , IFormFile img)
         {
             product objprd = new product
             {

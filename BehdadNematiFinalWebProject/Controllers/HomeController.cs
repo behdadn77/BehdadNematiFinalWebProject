@@ -57,8 +57,8 @@ namespace BehdadNematiFinalWebProject.Controllers
                     Email = "admin1@gmail.com",
                     UserName = "admin1@gmail.com",
                     PhoneNumber = "12234",
-                    firstname = "arash",
-                    lastname = "arashi"
+                    FirstName = "",
+                    LastName = ""
                 };
                 var status = await userManager.CreateAsync(user, "wer");
                 if (status.Succeeded == true)

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BehdadNematiFinalWebProject.Models.viewModels
+namespace BehdadNematiFinalWebProject.Models.ViewModels
 {
     public class ProductViewModel
     {

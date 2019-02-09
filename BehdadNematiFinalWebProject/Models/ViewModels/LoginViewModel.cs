@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace BehdadNematiFinalWebProject.Models.ViewModels
 {
-    public class topProductViewModel
+    public class LoginViewModel
     {
-        public int Id { get; set; }
-        public int product_Id { get; set; }
-
+        public string UserName { get; set; }
+        public string  Password { get; set; }
+        public bool RememberMe { get; set; }
     }
 }

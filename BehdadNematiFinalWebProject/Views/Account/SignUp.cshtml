@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "SignUp";
+}
+@using BehdadNematiFinalWebProject.Models.ViewModels;
+@model SignUpViewModel;
+<h1>Sign Up</h1>
+<div class="container offset-md-4 col-md-4">
+    <form asp-action="SignUpConfirm" asp-controller="Account">
+        <div class="form-group">
+            <input class="form-control" asp-for="UserName" placeholder="Username"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" asp-for="Password" placeholder="Password"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" asp-for="RePassword" placeholder="Re Enter password"/>
+        </div>
+        <hr/>
+        <div class="form-group">
+            <input class="form-control" asp-for="Name" placeholder="Name"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" asp-for="Family" placeholder="Family"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" asp-for="PhoneNum" placeholder="Phone number"/>
+        </div>
+        <button class="btn btn-success">Sign Up</button>
+    </form>
+</div>
+

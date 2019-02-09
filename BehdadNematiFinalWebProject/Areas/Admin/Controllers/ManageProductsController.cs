@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BehdadNematiFinalWebProject.Models.viewModels;
+using BehdadNematiFinalWebProject.Models.ViewModels;
 
 namespace BehdadNematiFinalWebProject.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "admins")]
+    [Authorize(Roles = "admins")]
     public class ManageProductsController : Controller
     {
         ApplicationContext db;
@@ -97,16 +97,16 @@ namespace BehdadNematiFinalWebProject.Controllers
             product p = db.products.Find(id);
             if (p!=null)
             {
-                ProductViewModel productView = new ProductViewModel()
+                ProductViewModel productViewModel = new ProductViewModel()
                 {
                     id = p.Id,
-                    EnglishName=p.EnglishName,
-                    count=p.count,
-                    price=p.price,
-                    brand_Id=p.brand_Id,
-                    productType_Id=p.productType_Id
+                    EnglishName = p.EnglishName,
+                    count = p.count,
+                    price = p.price,
+                    brand_Id = p.brand_Id,
+                    productType_Id = p.productType_Id
                 };
-                return View(productView);
+                return View(productViewModel);
 
             }
             return View("Product not found!");

@@ -2,194 +2,147 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using BehdadNematiFinalWebProject.Areas.Identity.Data;
-using BehdadNematiFinalWebProject.Models.viewModels;
+using BehdadNematiFinalWebProject.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace BehdadNematiFinalWebProject.Controllers
 {
     public class AccountController : Controller
     {
-        RoleManager<IdentityRole> roleManager;
-        UserManager<ApplicationUser> userManager;
-        SignInManager<ApplicationUser> signInManager;
-
-        public AccountController(RoleManager<IdentityRole> _roleManager,
-                              UserManager<ApplicationUser> _userManager,
-                              SignInManager<ApplicationUser> _signInManager)
+       private readonly RoleManager<IdentityRole> rolemanager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> usermanager;
+        private readonly ILogger<LogoutModel> logger;
+       
+        public AccountController(SignInManager<ApplicationUser> _signInManager,
+                              UserManager<ApplicationUser> _usermanager,
+                              RoleManager<IdentityRole> _rolemanager,
+                              ILogger<LogoutModel> _logger
+            )
         {
-            roleManager = _roleManager;
-            userManager = _userManager;
             signInManager = _signInManager;
+            usermanager = _usermanager;
+            rolemanager = _rolemanager;
+            logger = _logger;
+            
+        }
+        //-------------Login-----------------//
+        public IActionResult Login(string ReturnUrl=null)
+        {
+            return View(ReturnUrl);
         }
 
-        public async Task<IActionResult> googleLogin()
+
+        public async Task<IActionResult> LoginConfirm(LoginViewModel obj, string returnUrl = null)
         {
-            string redirectUrl = "Account/googleLoginCallBack";
-            var rediUrl = signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
-            return new ChallengeResult("Google", rediUrl);
-        }
+            returnUrl = returnUrl ?? Url.Content("~/");
 
-        public async Task<IActionResult> googleLoginCallBack(string remoteError)
-        {
-            switch (remoteError)
-            {
-                case null:
-
-                    var info = await signInManager.GetExternalLoginInfoAsync();
-                    var user = await userManager.FindByEmailAsync(info.Principal.FindFirst(System.Security.Claims.ClaimTypes.Email).Value);
-                    switch (user)
-                    {
-                        case null:
-                            regiserUserWithGoogleViewModels objuser = new regiserUserWithGoogleViewModels()
-                            {
-                                name = info.Principal.FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value,
-                                lastname = info.Principal.FindFirst(System.Security.Claims.ClaimTypes.Surname).Value,
-                                username = info.Principal.FindFirst(System.Security.Claims.ClaimTypes.Email).Value
-                            };
-                            return View(objuser);
-
-                        default: return RedirectToAction("Index", "Home");
-
-                    }
-
-                default: return View("we have some issue");
-            }
-        }
-
-        public async Task<IActionResult> regiserUserWithGoogle(regiserUserWithGoogleViewModels model)
-        {
-            var user = await userManager.FindByNameAsync(model.username);
-            if (user == null)
-            {
-                user = new ApplicationUser()
-                {
-                    UserName = model.username,
-                    firstname = model.name,
-                    lastname = model.lastname,
-                    Email = model.username
-                };
-
-                var status = await userManager.CreateAsync(user, model.password);
-                if (status.Succeeded == true)
-                {
-                    await userManager.AddToRoleAsync(user, "customers");
-
-                    //var userid = user.Id;
-                    //var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //string actionAddres = Url.Action("confirmEmail", "Account", new { Id = userid, token = token }, "https");
-
-                    //string link = $"<div style='border:2px solid red;border-border-radius:10px;padding:10px'>HI, <b>{user.firstname + " " + user.lastname}</b><br/>"
-                    //   + "To confirm your account, Please press below link" +
-                    //   $"<a href='{actionAddres}'>Confirm my account</a>"
-                    //   + "<br/><b>Asp.Net Core</b><br/>Reza Mohammadpour</div>";
-
-                    //System.Net.Mail.MailMessage mailmsg = new System.Net.Mail.MailMessage("nick.rzmmzr@gmail.com", user.Email);
-                    //mailmsg.IsBodyHtml = true;
-                    //mailmsg.Subject = "cnfirm email";
-                    //mailmsg.Body = link;
-
-                    //System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
-                    //smtpClient.Host = "smtp.gmail.com";
-                    //smtpClient.Port = 465;
-                    //smtpClient.EnableSsl = true;
-                    //smtpClient.Credentials = new System.Net.NetworkCredential("nick.rzmmzr@gmail.com", "vahidrzmmzr");
-                    //smtpClient.Send(mailmsg);
-
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
-            return RedirectToAction("SingUp");
-        }
-
-        public async Task<IActionResult> regiserUserWithoutGoogleComfirm(regiserUserWithoutGoogleViewModels model)
-        {
-            var user = await userManager.FindByNameAsync(model.username);
-            if (user == null)
-            {
-                user = new ApplicationUser()
-                {
-                    UserName = model.username,
-                    firstname = model.name,
-                    lastname = model.lastname,
-                    PhoneNumber = model.phonenumber,
-                    Email = model.email
-                };
-
-                var status = await userManager.CreateAsync(user, model.password);
-                if (status.Succeeded == true)
-                {
-                    await userManager.AddToRoleAsync(user, "customers");
-
-                    //var userid = user.Id;
-                    //var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //string actionAddres = Url.Action("confirmEmail", "Account", new { Id = userid, token = token }, "https");
-
-                    //string link = $"<div style='border:2px solid red;border-border-radius:10px;padding:10px'>HI, <b>{user.firstname + " " + user.lastname}</b><br/>"
-                    //   + "To confirm your account, Please press below link" +
-                    //   $"<a href='{actionAddres}'>Confirm my account</a>"
-                    //   + "<br/><b>Asp.Net Core</b><br/>Reza Mohammadpour</div>";
-
-                    //System.Net.Mail.MailMessage mailmsg = new System.Net.Mail.MailMessage("nick.rzmmzr@gmail.com", user.Email);
-                    //mailmsg.IsBodyHtml = true;
-                    //mailmsg.Subject = "cnfirm email";
-                    //mailmsg.Body = link;
-
-                    //System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
-                    //smtpClient.Host = "smtp.gmail.com";
-                    //smtpClient.Port = 465;
-                    //smtpClient.EnableSsl = true;
-                    //smtpClient.Credentials = new System.Net.NetworkCredential("nick.rzmmzr@gmail.com", "vahidrzmmzr");
-                    //smtpClient.Send(mailmsg);
-                    var userr = await userManager.FindByNameAsync(model.username);
-                    await signInManager.SignInAsync(userr,false);
-                    return RedirectToAction("Index", "Home");
-
-
-                }
-            }
-
-            return RedirectToAction("regiserUserWithoutGoogle");
-        }
-        public IActionResult regiserUserWithoutGoogle()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> confirmEmail(string Id, string token)
-        {
-            var user = await userManager.FindByIdAsync(Id);
-            await userManager.ConfirmEmailAsync(user, token);
-
-            return RedirectToAction("SingUp");
-        }
-
-        public IActionResult login(string returnUrl = "")
-        {
-            ViewData["returnUrl"] = returnUrl;
-            return View();
-        }
-
-        public async Task<IActionResult> loginConfirm(loginUserViewModel model, string returnUrl ="/Home/Index")
-        {
-            var user = await userManager.FindByNameAsync(model.username);
+            var user = await usermanager.FindByNameAsync(obj.UserName);
             if (user != null)
             {
-                var status = await signInManager.PasswordSignInAsync(user, model.password, model.rememberme, false);
+                var status = await signInManager.PasswordSignInAsync(user, obj.Password, obj.RememberMe, false);
                 var s = User.Identity.IsAuthenticated;
                 if (status.Succeeded == true)
                 {
                     return Redirect(returnUrl);
                 }
             }
-            return RedirectToAction("login");
+
+            // User Doesn't exist
+            return Json("User Doesn't exist");
+            
         }
-        public async Task<IActionResult> logout()
+
+        //-------------Google Authenication---------------//
+        public IActionResult GoogleLogin()
+        {
+            string redirectAction = Url.Action("RedirectFromGoogleLogin", "Account"); //"/Account/RedirectFromGooleLogin";
+            var properties =
+                signInManager.ConfigureExternalAuthenticationProperties("Google", redirectAction);
+            return new ChallengeResult("Google", properties);
+        }
+        public async Task<IActionResult> RedirectFromGoogleLogin()
+        {
+            var info = await signInManager.GetExternalLoginInfoAsync();
+
+            var username = info.Principal
+                .FindFirst(System.Security.Claims.ClaimTypes.Email).Value;
+            var name = info.Principal
+                .FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value;
+            var family = info.Principal
+                .FindFirst(System.Security.Claims.ClaimTypes.Surname).Value;
+
+            var founduser = await usermanager.FindByNameAsync(username);
+            if (founduser == null) //User doesn't exist must be registerd 
+            {
+                return RedirectToAction("SignUp", new SignUpViewModel() {
+                    UserName=username,
+                    Name=name,
+                    Family=family
+                });
+            }
+            else
+            {
+                //login with google credentials
+                
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        //--------------SignUp------------------//
+        public IActionResult SignUp(SignUpViewModel obj=null)
+        {
+            if (obj==null)
+            {
+                return View();  
+            }
+            return View(obj);
+        } 
+
+        public async Task<IActionResult> SignUpConfirm(SignUpViewModel obj,string returnUrl=null) 
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            var user = await usermanager.FindByNameAsync(obj.UserName); 
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    Email = obj.UserName,
+                    UserName = obj.UserName,
+                    PhoneNumber = obj.PhoneNum,
+                    FirstName = obj.Name,
+                    LastName = obj.Family
+                };
+
+                var status = await usermanager.CreateAsync(user,obj.Password);
+                if (status.Succeeded == true)
+                {
+                    await usermanager.AddToRoleAsync(user, "customers");
+                }
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return View("Account already exists");
+            }
+        }
+
+        //----------Logout-----------------//
+        public async Task<IActionResult> LogOut(string returnUrl = null)
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            logger.LogInformation("User logged out.");
+            //if (returnUrl != null)
+            //{
+            //    return LocalRedirect(returnUrl);
+            //}
+
+            return Redirect("/Home/Index");
         }
 
     }

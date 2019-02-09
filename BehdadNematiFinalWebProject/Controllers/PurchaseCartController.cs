@@ -39,7 +39,7 @@ namespace BehdadNematiFinalWebProject.Controllers
             }
             return Json(false);
         }
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> showPurchaseCart()
         {
             var user = await userManager.FindByNameAsync(User.Identity.Name);

@@ -1,11 +1,10 @@
 ﻿
-@using BehdadNematiFinalWebProject.Models.viewModels;
+@using BehdadNematiFinalWebProject.Models.ViewModels
 @model ProductViewModel;
 
 <h2>Edit Product</h2>
 
 <div class="container offset-md-3 col-md-6">
-
     <form asp-action="EditProductConfirm" asp-controller="ManageProducts" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <input class="form-control" asp-for="EnglishName" placeholder="Product English Name" />

@@ -9,7 +9,7 @@ namespace BehdadNematiFinalWebProject.Areas.Identity.Data
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
-        public string firstname { get; set; }
-        public string lastname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }

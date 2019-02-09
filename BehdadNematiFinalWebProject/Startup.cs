@@ -52,7 +52,7 @@ namespace BehdadNematiFinalWebProject
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseAuthentication(); // added 4 authentication
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

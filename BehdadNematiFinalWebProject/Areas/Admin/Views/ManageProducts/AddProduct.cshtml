@@ -1,5 +1,5 @@
 ﻿
-@using BehdadNematiFinalWebProject.Models.viewModels;
+@using BehdadNematiFinalWebProject.Models.ViewModels;
 @model ProductViewModel;
 <h2>Add Product</h2>
 
@@ -36,7 +36,7 @@
             <div style="border:2px solid blue; margin-top:4px; margin-bottom:4px; padding:4px;">
                 <button type="button" class="btn btn-danger" id="btnRmv">Remove</button>
                 <div class="custom-file">
-                    <input class="custom-file-input" asp-for="Pictures" />
+                    <input class="custom-file-input" asp-for="Pictures" id="imgInput"/>
                     <label class="custom-file-label">Choose...</label>
                 </div>
                 <span asp-validation-for="Pictures"></span>

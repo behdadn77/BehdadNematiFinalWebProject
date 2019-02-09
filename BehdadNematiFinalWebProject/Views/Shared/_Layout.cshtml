@@ -1,4 +1,5 @@
-﻿<!--
+﻿
+<!--
     Author: W3layouts
     Author URL: http://w3layouts.com
     License: Creative Commons Attribution 3.0 Unported
@@ -34,6 +35,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           rel="stylesheet">
 
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
@@ -63,11 +65,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                 <div class="col-md-3 top-info-cart text-right mt-lg-4">
                     <ul class="cart-inner-info">
-                        <li class="button-log">
-                            <a class="btn-open" href="#">
-                                <span class="fa fa-user" aria-hidden="true"></span>
-                            </a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated == false)
+                        {
+                            <li class="button-log">
+                                <a class="btn-open" href="#">
+                                    Log in
+                                    <span class="fa fa-user" aria-hidden="true"></span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            if (User.IsInRole("admins") == true)
+                            {
+                                <a href="/Admin/ManageProducts/ProductList">Admin Control Panel</a>
+                                <br/>
+                            }
+                            <li class="button-log">
+                                <a class="btn-open" href="/account/Logout">
+                                    Log Out
+                                    <span class="fa fa-user" aria-hidden="true"></span>
+                                    @User.Identity.Name
+                                </a>
+                            </li>
+
+                        }
+
                         <li class="galssescart galssescart2 cart cart box_1">
                             <form action="#" method="post" class="last">
                                 <input type="hidden" name="cmd" value="_cart">
@@ -87,23 +110,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="wrap">
                             <h5 class="text-center mb-4">Login Now</h5>
                             <div class="login p-5 bg-dark mx-auto mw-100">
-                                <form action="#" method="post">
+                                @*@using BehdadNematiFinalWebProject.Models.ViewModels;
+                                @model LoginViewModel;
+                                    can not use this in layout
+                                    *@
+
+                                <form asp-action="LoginConfirm" asp-controller="Account" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
-                                        <label class="mb-2">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" required="">
+                                        <label class="mb-2">Email address or User name</label>
+                                        <input name="UserName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" required="">
                                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                     </div>
                                     <div class="form-group">
                                         <label class="mb-2">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="" required="">
+                                        <input name="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="" required="">
                                     </div>
                                     <div class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                        <input name="RememberMe" type="checkbox" class="form-check-input" value="1">
+                                        <label class="form-check-label" for="exampleCheck1">Keep me signed in</label>
                                     </div>
                                     <button type="submit" class="btn btn-primary submit mb-4">Sign In</button>
 
                                 </form>
+
+
+                                <a class="btn btn-info" asp-action="GoogleLogin" asp-controller="account">Login With Google</a>
+
                             </div>
                             <!---->
                         </div>
@@ -308,23 +340,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
             </nav>
         </header>
-        <!-- banner -->
-        <div class="banner_inner">
-            <div class="services-breadcrumb">
-                <div class="inner_breadcrumb">
+        @*<!-- banner -->
+            <div class="banner_inner">
+                <div class="services-breadcrumb">
+                    <div class="inner_breadcrumb">
 
-                    @*<ul class="short">
-                        <li>
-                            <a href="index.html">Home</a>
-                            <i>|</i>
-                        </li>
-                        <li>404</li>
-                    </ul>*@
+                        <ul class="short">
+                            <li>
+                                <a href="index.html">Home</a>
+                                <i>|</i>
+                            </li>
+                            <li>404</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-        </div>
-        <!--//banner -->
+            </div>
+            <!--//banner -->*@
     </div>
     <!--// header_top -->
     <div>

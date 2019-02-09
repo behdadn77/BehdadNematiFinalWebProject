@@ -1,81 +1,24 @@
 ﻿
-<!DOCTYPE html>
-<html>
+@{
+    ViewData["Title"] = "Login";
+}
+@using BehdadNematiFinalWebProject.Models.ViewModels;
+@model LoginViewModel;
+<h1>Login</h1>
 
-<head>
-
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    @using BehdadNematiFinalWebProject.Models.viewModels
-    @model loginUserViewModel
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Brand</title>
-    <link rel="stylesheet" href="~/Assets/bootstrap/css~/Assets/bootstrap.min.css">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-    <link rel="stylesheet" href="~/Assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="~/Assets/fonts/simple-line-icons.min.css">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=ABeeZee">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Abel">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Abhaya+Libre">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Abril+Fatface">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Aclonica">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Acme">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Actor">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Adamina">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Advent+Pro">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Aguafina+Script">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Akronim">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Aladin">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Alef">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Alegreya">
-    <link rel="stylesheet" href="~/Assets/fonts/fonts.googleapis.com/css?family=Alegreya+Sans">
-    <link rel="stylesheet" href="~/Assets/css/Footer-Clean.css">
-    <link rel="stylesheet" href="~/Assets/css/Footer-Dark.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
-    <link rel="stylesheet" href="~/Assets/css/Login-Form-Dark.css">
-    <link rel="stylesheet" href="~/Assets/css/Simple-Slider.css">
-    <link rel="stylesheet" href="~/Assets/css/untitled.css">
-</head>
-
-<body>
-    <div class="login-dark" style="background-image:url(&quot;~/Assets/img/fancycrave-520424-unsplash.jpg&quot;);background-color:rgb(245,245,245);">
-        <a href="index.html" style="font-family:Akronim, cursive;font-size:67px;color:rgb(238,247,255);">BehdadNematiFinalWebProject</a>
-        <form style="background-color:rgb(1,23,45);" asp-action="loginConfirm" asp-controller="Account">
-            <h2 class="sr-only">Login Form</h2><label style="background-color:rgb(1,23,45);color:rgb(232,239,246);font-size:40px;font-family:Actor, sans-serif;">sign in</label>
-            <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
-            <div class="form-group">
-                <input asp-for="username" class="form-control"  placeholder="Username or Email">
-                <span asp-validation-for="username"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="password" class="form-control" type="password" placeholder="Password">
-                <span asp-validation-for="password"></span>
-            </div>
-
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" value="true" asp-for="rememberme" style="margin-top:20pt" />
-                <label class="form-check-label" asp-for="rememberme">Remeber me</label>
-            </div>
-            <button class="btn btn-primary btn-block">Log In</button>
-            
-        </form>
-        <a href="#" class="forgot">Forgot your email or password?</a>
-    </div>
-    <main class="page login-page"></main>
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <script src="~/Assets/bootstrap/js~/Assets/bootstrap.min.js"></script>
-    <script src="~/Assets/js/theme.js"></script>
-    <script src="~/Assets/js/bs-animation.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
-    <script src="~/Assets/js/Simple-Slider.js"></script>
-    <script id="bs-live-reload" data-sseport="9453" data-lastchange="1546588178463" src="/js/livereload.js"></script>
-</body>
-
-</html>
+<div class="container offset-md-4 col-md-4">
+    <form asp-action="LoginConfirm" asp-controller="Account">
+        <div class="form-group">
+            <input class="form-control" asp-for="UserName" placeholder="Username"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" asp-for="Password" placeholder="Password" type="password"/>
+        </div>
+        <div class="form-group">
+            <input class="form-check" asp-for="RememberMe" value="1"/>
+            <label>Remeber me</label>
+        </div>
+        <button class="btn btn-success">Login</button>
+    </form>
+    <a class="btn btn-info" asp-action="GoogleLogin"asp-controller="account">Login with google</a>
+</div> 
