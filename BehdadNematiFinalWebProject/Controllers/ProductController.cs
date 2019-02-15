@@ -31,15 +31,15 @@ namespace BehdadNematiFinalWebProject.Controllers
         {
             var product = db.products.Include(x => x.images).ToList();
             List<purchaseCart_product> userPurchCartPrdtProductLst = new List<purchaseCart_product>();
-            var user = await userManager.FindByNameAsync(User.Identity.Name);
-            if (user != null)
+            if (User.Identity.Name!=null)
             {
-                var userPurchCart = db.purchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).ToList();
-                if (userPurchCart != null)
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                if (user != null)
                 {
-                    foreach (var item in userPurchCart)
+                    var userPurchCart = db.purchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).ToList();
+                    if (userPurchCart.Count>0)
                     {
-                     userPurchCartPrdtProductLst = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == item.Id).ToList();
+                         userPurchCartPrdtProductLst = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == userPurchCart.Last().Id).ToList();
                     }
                 }
             }
@@ -63,7 +63,6 @@ namespace BehdadNematiFinalWebProject.Controllers
                 {
                     if (userPurchCartPrdtProductLst.Where(x => x.product_Id == item.Id).ToList().Count>0)
                     {
-
                         p.SelectedInCart = true;    
                     }
                 }
@@ -71,26 +70,25 @@ namespace BehdadNematiFinalWebProject.Controllers
             }
             return PartialView(ProductLst);
         }
-        public async Task<IActionResult> checkPrdtInPurchsCart(int productId)
-        {
+        //public async Task<IActionResult> checkPrdtInPurchsCart(int productId)
+        //{
+        //    var user = await userManager.FindByNameAsync(User.Identity.Name);
+        //    if (user != null)
+        //    {
+        //        var userPurchCart = db.purchaseCarts.Single(x => x.user_Id == user.Id && x.isPaid == false);
+        //        if (userPurchCart != null)
+        //        {
+        //            var userPurchCartPrdtProductLst = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == userPurchCart.Id).ToList();
+        //            var st = userPurchCartPrdtProductLst.Where(x => x.product_Id == productId).ToList();
+        //            if (st != null)
+        //            {
+        //                return Json(true);
+        //            }
 
-            var user = await userManager.FindByNameAsync(User.Identity.Name);
-            if (user != null)
-            {
-                var userPurchCart = db.purchaseCarts.Single(x => x.user_Id == user.Id && x.isPaid == false);
-                if (userPurchCart != null)
-                {
-                    var userPurchCartPrdtProductLst = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == userPurchCart.Id).ToList();
-                    var st = userPurchCartPrdtProductLst.Where(x => x.product_Id == productId).ToList();
-                    if (st != null)
-                    {
-                        return Json(true);
-                    }
-
-                }
-            }
-            return Json(false);
-        }
+        //        }
+        //    }
+        //    return Json(false);
+        //}
 
     }
 }
