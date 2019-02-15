@@ -21,6 +21,10 @@
         <td>@item.brand.name</td>
         <td>
             @*<img src="data:image;base64,@System.Convert.ToBase64String(item.images.First().img)" width="8" height="8" />*@
+            @foreach (image item1 in item.images)
+            {
+            <img src="data:image;base64,@System.Convert.ToBase64String(item1.img)" width="70" height="70" />
+            }
         </td>
         <td>
             <a class="btn btn-warning" asp-area="admin" asp-controller="manageproducts" asp-action="editproduct" asp-route-id="@item.Id">Edit</a>

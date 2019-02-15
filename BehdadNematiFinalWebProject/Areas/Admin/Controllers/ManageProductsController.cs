@@ -94,9 +94,15 @@ namespace BehdadNematiFinalWebProject.Controllers
         //-------Edit Product-------//
         public IActionResult EditProduct(int id)
         {
-            product p = db.products.Find(id);
+            //product p = db.products.Find(id);
+            product p = db.products.Include(x=>x.images).Where(x=>x.Id==id).First();
             if (p!=null)
             {
+                List<string> img = new List<string>();
+                foreach (var item in p.images)
+                {
+                    img.Add($"data:image;base64,{Convert.ToBase64String(item.img)}");
+                }
                 ProductViewModel productViewModel = new ProductViewModel()
                 {
                     id = p.Id,
@@ -104,7 +110,8 @@ namespace BehdadNematiFinalWebProject.Controllers
                     count = p.count,
                     price = p.price,
                     brand_Id = p.brand_Id,
-                    productType_Id = p.productType_Id
+                    productType_Id = p.productType_Id,
+                    imagesBase64List = img
                 };
                 return View(productViewModel);
 
@@ -134,7 +141,6 @@ namespace BehdadNematiFinalWebProject.Controllers
                 db.Remove(p);
                 if (db.SaveChanges()!=0)
                 {
-                    return RedirectToAction("productlist");
                     return RedirectToAction("productlist");
                 }
                 return View("Error");
@@ -199,5 +205,21 @@ namespace BehdadNematiFinalWebProject.Controllers
         //{
 
         //}
+        //-----insert brand----//
+        public IActionResult insertBrand()
+        {
+            return View();
+        }
+        public IActionResult insertBrandConfirm(brandViewModels models)
+        {
+            brand objbrand = new brand()
+            {
+                name = models.name
+            };
+            db.Add(objbrand);
+            db.SaveChanges();
+            return RedirectToAction("insert");
+        }
+
     }
 }

@@ -5,25 +5,93 @@
 @using BehdadNematiFinalWebProject.Models.ViewModels
 @model List<ShowProductViewModel>
 
-@foreach (var item in Model)
+@for (int i = 0; i < Model.Count; i++)
 {
-    <div class="col-12 col-md-6 col-lg-4">
-        <div class="clean-product-item">
-            @foreach (var ittem in item.images)
+    if (i % 4 == 0)
+    {
+        <div class="row">
+            @for (int j = i; j < i + 4; j++)
             {
-                <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="@($"data:image/jpeg;base64,{Convert.ToBase64String(ittem.img)}")"></a></div>
-            }
-            <div class="product-name"><a href="#">@item.EnglishName</a></div>
-            <div class="about">
-                <div class="rating"><img src="~/Assets/img/star.svg"><img src="~/Assets/img/star.svg"><img src="~/Assets/img/star.svg"><img src="~/Assets/img/star-half-empty.svg"></div>
-                <div class="price">
-                    <h3>@item.price</h3>
+                @if (j >= Model.Count)
+                {
+                    break;
+                }
+                <div class="col-md-3 product-men women_two shop-gd">
+                    <div class="product-googles-info googles">
+                        <div class="men-pro-i">
+                            <div class="men-thumb-i">
+                                @*@{
+                                        List<image> ImgLst = i.images.ToList();
+                                    <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(ImgLst.First().img)}")" class="img-fluid">
+                                     }*@
+                                @foreach (var item in Model[j].images)
+                                {
+                                    <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.img)}")" class="img-fluid" height="500" width="500">
+                                }
+
+                                <div class="men-cart-pro">
+                                    <div class="inner-men-cart-pro">
+                                        <a href="single.html" class="link-product-add-cart">Quick View</a>
+                                    </div>
+                                </div>
+                                <span class="product-new-top">New</span>
+                            </div>
+                            <div class="i-info-product">
+                                <div class="info-product-price">
+                                    <div class="grid_meta">
+                                        <div class="product_price">
+                                            <h4>
+                                                <a href="single.html">@Model[j].EnglishName</a>
+                                            </h4>
+                                            <div class="grid-price mt-2">
+                                                <span class="money ">$ @Model[j].price</span>
+                                            </div>
+                                        </div>
+                                        <ul class="stars">
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="googles single-i hvr-outline-out">
+                                        @if (Model[j].SelectedInCart != true)
+                                        {
+                                            <button type="submit" class="googles-cart pgoogles-cart">
+                                                <i class="fas fa-cart-plus"></i>
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            @if (item.SelectedInCart !=true)
-            {
-            <button class="btn btn-primary" type="button" id="addprd" product_id="@item.Id"><i class="icon-basket"></i>Add to Cart</button>
             }
         </div>
-    </div>
+    }
 }
+
+@*///////////////////////////////////////////////////////*@
