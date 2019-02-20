@@ -76,30 +76,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         }
                         else
                         {
-                            if (User.IsInRole("admins") == true)
-                            {
-                                <a href="/Admin/ManageProducts/ProductList">Admin Control Panel</a>
-                                <br/>
-                            }
                             <li class="button-log">
                                 <a class="btn-open" href="/account/Logout">
                                     Log Out
-                                    <span class="fa fa-user" aria-hidden="true"></span>
-                                    @User.Identity.Name
                                 </a>
+                                <span class="fa fa-user" aria-hidden="true"></span>
+                                @User.Identity.Name
                             </li>
 
                         }
 
                         <li class="galssescart galssescart2 cart cart box_1">
-                            <form action="#" method="post" class="last">
-                                <input type="hidden" name="cmd" value="_cart">
-                                <input type="hidden" name="display" value="1">
-                                <button class="top_googles_cart" type="submit" name="submit" value="">
-                                    My Cart
-                                    <i class="fas fa-cart-arrow-down"></i>
-                                </button>
-                            </form>
+                            <a class="top_googles_cart" asp-action="ShowPurchaseCart" asp-controller="PurchaseCart">
+                                My Cart
+                                <i class="fas fa-cart-arrow-down"></i>
+                            </a>
                         </li>
                     </ul>
                     <!---->
@@ -176,10 +167,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav nav-mega mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link ml-lg-0" href="index.html">
+                            <a class="nav-link ml-lg-0" href="/">
                                 Home
-                                <span class="sr-only">(current)</span>
+                                @*<span class="sr-only">(current)</span>*@
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            @if (User.IsInRole("admins") == true&&User.Identity.IsAuthenticated==true)
+                            {
+                                <a class="nav-link ml-lg-0" href="/Admin/ManageProducts/ProductList">Admin Control Panel</a>
+                            }
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="about.html">About</a>
@@ -238,7 +235,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" asp-action="showProducts" asp-controller="product" id="navbarDropdown1" role="button"  aria-haspopup="true"
+                            <a class="nav-link dropdown-toggle" asp-action="showProducts" asp-controller="product" id="navbarDropdown1" role="button" aria-haspopup="true"
                                aria-expanded="false">
                                 Shop
                             </a>

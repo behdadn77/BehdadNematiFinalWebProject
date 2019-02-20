@@ -20,7 +20,24 @@ namespace BehdadNematiFinalWebProject.Controllers
             userManager = _userManager;
             db = _db;
         }
-        public async Task<IActionResult> addToPrchusCrt(int productId)
+        public async Task<IActionResult> ShowPurchaseCart()
+        {
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            if (user != null)
+            {
+                var Purchscart = db.purchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).LastOrDefault();
+                if (Purchscart != null)
+                {
+                    var purchaseCartProducts = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == Purchscart.Id);
+                    return View(purchaseCartProducts.Include(x => x.product).Include(x => x.product.images).ToList());
+                }
+                return View("Purchase cart not found!");
+
+            }
+            return RedirectToAction("login", "Account");
+        }
+        //----------------------------------------------------------------------//
+        public async Task<IActionResult> AddItemToPurchaseCartAsync(int productId)
         {
             var user = await userManager.FindByNameAsync(User.Identity.Name);
             if (user != null)
@@ -39,25 +56,8 @@ namespace BehdadNematiFinalWebProject.Controllers
             }
             return Json(false);
         }
-        //[Authorize]
-        public async Task<IActionResult> showPurchaseCart()
-        {
-            var user = await userManager.FindByNameAsync(User.Identity.Name);
-            if (user != null)
-            {
-                var Purchscart = db.purchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).FirstOrDefault();
-                if (Purchscart != null)
-                {
-                    var purchaseCartProducts = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == Purchscart.Id);
-
-                    return View(purchaseCartProducts.Include(x => x.product).Include(x => x.product.images).ToList());
-                }
-                return View("Purchase cart not found!");
-
-            }
-            return RedirectToAction("login", "Account");
-        }
-        public async Task<IActionResult> removeFromCart(int prchsCartPrductId)
+        [Authorize]
+        public async Task<IActionResult> RemoveItemFromPurchaseCart(int prchsCartPrductId)
         {
             try
             {
@@ -72,6 +72,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                 return Json(false);
             }
         }
+        //----------------------------------------------------------------------//
         public async Task<int> getPurchaseCartProductCountAsync()
         {
             int count = 0;
@@ -109,9 +110,10 @@ namespace BehdadNematiFinalWebProject.Controllers
             }
             return totalPrice;
         }
-        public async Task<IActionResult> increasePrdtCountPurchaseCartAsync(int prchsCartPrductId)
+        //----------------------------------------------------------------------//
+        public async Task<IActionResult> IncreasePrdtCountInPurchaseCartAsync(int Id)
         {
-            var prdt = db.purchaseCart_Products.Find(prchsCartPrductId);
+            var prdt = db.purchaseCart_Products.Find(Id);
             if (prdt !=null)
             {
             int isAvailablePrdt= db.products.Find(prdt.product_Id).count;
@@ -132,9 +134,9 @@ namespace BehdadNematiFinalWebProject.Controllers
             }
             return RedirectToAction("Product","showProduct");
         }
-        public async Task<IActionResult> decreasePrdtCountPurchaseCart(int prchsCartPrductId)
+        public async Task<IActionResult> DecreasePrdtCountInPurchaseCartAsync(int Id)
         {
-            var prdt = db.purchaseCart_Products.Find(prchsCartPrductId);
+            var prdt = db.purchaseCart_Products.Find(Id);
             if (prdt != null)
             {
                 int isAvailablePrdt = db.products.Find(prdt.product_Id).count;
