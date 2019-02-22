@@ -76,7 +76,13 @@
                                 <div class="googles single-i hvr-outline-out">
                                     @if (Model[j].SelectedInCart != true)
                                     {
-                                        <button type="submit" class="googles-cart pgoogles-cart">
+                                        @*<form asp-action="AddItemToPurchaseCartAsync" asp-controller="purchaseCart" enctype="multipart/form-data">
+                                            <input type="hidden" name="Id" value="@Model[j].Id" />
+                                            <button type="submit" class="googles-cart pgoogles-cart" >
+                                                <i class="fas fa-cart-plus"></i>
+                                            </button>
+                                        </form>*@
+                                        <button type="submit" class="googles-cart pgoogles-cart" ProductId="@Model[j].Id" >
                                             <i class="fas fa-cart-plus"></i>
                                         </button>
                                     }
@@ -90,4 +96,20 @@
         }
     </div>
 }
+<script>
+    $(function () {
+        $('.googles-cart').on('click', function () {
+            var Id = $(this).attr('ProductId')
+            var Button = $(this);
+            $.post('/purchaseCart/AddItemToPurchaseCartAsync', { Id: Id },
+                function (value) {
+                    if (value) {
+                        $(Button).remove();
+                    } else {
+                        alert('Somthing went wrong!');
+                    }
+                })
+        })
+    })
+</script>
 

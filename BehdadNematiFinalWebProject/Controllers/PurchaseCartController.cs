@@ -28,6 +28,9 @@ namespace BehdadNematiFinalWebProject.Controllers
                 var Purchscart = db.purchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).LastOrDefault();
                 if (Purchscart != null)
                 {
+                                    ViewData["totalprice"] =
+                    (await GetPurchaseCartProductTotalPriceAsync()).ToString("C").Replace("/00", "");//currency
+
                     var purchaseCartProducts = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == Purchscart.Id);
                     return View(purchaseCartProducts.Include(x => x.product).Include(x => x.product.images).ToList());
                 }
@@ -37,7 +40,8 @@ namespace BehdadNematiFinalWebProject.Controllers
             return RedirectToAction("login", "Account");
         }
         //----------------------------------------------------------------------//
-        public async Task<IActionResult> AddItemToPurchaseCartAsync(int productId)
+        [Authorize]
+        public async Task<IActionResult> AddItemToPurchaseCartAsync(int Id)
         {
             var user = await userManager.FindByNameAsync(User.Identity.Name);
             if (user != null)
@@ -49,7 +53,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                     db.Add(Purchscart);
                     db.SaveChanges();
                 }
-                var purchaseCartproduct = new purchaseCart_product { purchaseCart_Id = Purchscart.Id, count = 1, product_Id = productId };
+                var purchaseCartproduct = new purchaseCart_product { purchaseCart_Id = Purchscart.Id, count = 1, product_Id = Id };
                 db.Add(purchaseCartproduct);
                 db.SaveChanges();
                 return Json(true);
@@ -57,15 +61,15 @@ namespace BehdadNematiFinalWebProject.Controllers
             return Json(false);
         }
         [Authorize]
-        public async Task<IActionResult> RemoveItemFromPurchaseCart(int prchsCartPrductId)
+        public async Task<IActionResult> RemoveItemFromPurchaseCart(int Id)
         {
             try
             {
-                purchaseCart_product prchsCartPrduct = db.purchaseCart_Products.Find(prchsCartPrductId);
+                purchaseCart_product prchsCartPrduct = db.purchaseCart_Products.Find(Id);
                 db.Remove(prchsCartPrduct);
                 db.SaveChanges();
-                return Json(new { count= await getPurchaseCartProductCountAsync(),
-                                  totalPrice = await getPurchaseCartProductTotalPriceAsync() });
+                return Json(new { count= await GetPurchaseCartProductCountAsync(),
+                                  totalPrice = await GetPurchaseCartProductTotalPriceAsync() });
             }
             catch
             {
@@ -73,7 +77,8 @@ namespace BehdadNematiFinalWebProject.Controllers
             }
         }
         //----------------------------------------------------------------------//
-        public async Task<int> getPurchaseCartProductCountAsync()
+        [Authorize]
+        public async Task<int> GetPurchaseCartProductCountAsync()
         {
             int count = 0;
             var user = await userManager.FindByNameAsync(User.Identity.Name);
@@ -92,7 +97,8 @@ namespace BehdadNematiFinalWebProject.Controllers
             }
             return count;
         }
-        public async Task<int> getPurchaseCartProductTotalPriceAsync()
+        [Authorize]
+        public async Task<int> GetPurchaseCartProductTotalPriceAsync()
         {
             int totalPrice = 0;
             var user = await userManager.FindByNameAsync(User.Identity.Name);
@@ -103,27 +109,25 @@ namespace BehdadNematiFinalWebProject.Controllers
                 {
                     var p = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == purchaseCart.Id).Include(x=>x.product).ToList();
                     totalPrice = p.Sum(x=>x.count*x.product.price);
-                    //p.ForEach(x => {
-                    //    totalPrice += x.product.price* x.count;
-                    //});
                 }
             }
             return totalPrice;
         }
         //----------------------------------------------------------------------//
+        [Authorize]
         public async Task<IActionResult> IncreasePrdtCountInPurchaseCartAsync(int Id)
         {
             var prdt = db.purchaseCart_Products.Find(Id);
             if (prdt !=null)
             {
-            int isAvailablePrdt= db.products.Find(prdt.product_Id).count;
-                if ((prdt.count)+1 <= isAvailablePrdt)
+            int AvailablePrdtCount= db.products.Find(prdt.product_Id).count;
+                if ((prdt.count)+1 <= AvailablePrdtCount)
                 {
                     prdt.count++;
                     db.SaveChanges();
                     return Json(new {
-                        totalPrice = await getPurchaseCartProductTotalPriceAsync(),
-                        count = await getPurchaseCartProductCountAsync(),
+                        totalPrice = await GetPurchaseCartProductTotalPriceAsync(),
+                       // count = await GetPurchaseCartProductCountAsync(),
                         productCount = prdt.count
                     });
                 }
@@ -132,22 +136,23 @@ namespace BehdadNematiFinalWebProject.Controllers
                     return Json(false);
                 }
             }
-            return RedirectToAction("Product","showProduct");
+            return View("Somthing went wrong!");
         }
+        [Authorize]
         public async Task<IActionResult> DecreasePrdtCountInPurchaseCartAsync(int Id)
         {
             var prdt = db.purchaseCart_Products.Find(Id);
             if (prdt != null)
             {
-                int isAvailablePrdt = db.products.Find(prdt.product_Id).count;
+                int AvailablePrdtCount = db.products.Find(prdt.product_Id).count;
                 if (prdt.count >1)
                 {
                     prdt.count--;
                     db.SaveChanges();
                     return Json(new
                     {
-                        totalPrice = await getPurchaseCartProductTotalPriceAsync(),
-                        count = await getPurchaseCartProductCountAsync(),
+                        totalPrice = await GetPurchaseCartProductTotalPriceAsync(),
+                        //count = await GetPurchaseCartProductCountAsync(),
                         productCount = prdt.count
                     });
                 }
@@ -156,7 +161,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                     return Json(false);
                 }
             }
-            return RedirectToAction("Product", "showProduct");
+            return View("Somthing went wrong!");
         }
 
 

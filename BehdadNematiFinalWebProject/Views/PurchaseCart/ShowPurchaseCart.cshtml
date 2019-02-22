@@ -20,7 +20,7 @@
             <div class="checkout-right">
                 <h4>
                     Your shopping cart contains:
-                    <span>3 Products</span>
+                    <span id="totalcount">@Model.Count Products</span>
                 </h4>
                 <table class="timetable_sub">
                     <thead>
@@ -38,7 +38,7 @@
                         @foreach (var item in Model)
                         {
                             <tr class="rem1">
-                                <td class="invert">1</td>
+                                <td class="invert">@item.product_Id</td>
                                 <td class="invert-image">
                                     <a href="single.html">
                                         @foreach (var item2 in item.product.images)
@@ -50,11 +50,11 @@
                                 <td class="invert">
                                     <div class="quantity">
                                         <div class="quantity-select">
-                                            <div class="entry value-minus">&nbsp;</div>
+                                            <div class="entry value-minus" purchaseCartProductId="@item.Id">&nbsp;</div>
                                             <div class="entry value">
                                                 <span>@item.count</span>
                                             </div>
-                                            <div class="entry value-plus active">&nbsp;</div>
+                                            <div class="entry value-plus active" purchaseCartProductId="@item.Id">&nbsp;</div>
                                         </div>
                                     </div>
                                 </td>
@@ -63,7 +63,7 @@
                                 <td class="invert">$@item.product.price</td>
                                 <td class="invert">
                                     <div class="rem">
-                                        <div class="close1"> </div>
+                                        <div purchaseCartProductId="@item.Id"  class="close1"> </div>
                                     </div>
 
                                 </td>
@@ -71,6 +71,19 @@
                         }
                     </tbody>
                 </table>
+            </div>
+            <div class="checkout-left">
+                <div class="col-md-4 checkout-left-basket">
+                    <ul>
+                        <li>
+                            Total <i>-</i> <span id="totalprice" style="font-weight:bold">
+                                @ViewData["totalprice"]
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix"> </div>
+                <div class="clearfix"></div>
             </div>
 
         </div>
@@ -143,44 +156,48 @@
 <!--quantity-->
 <script>
     $('.value-plus').on('click', function () {
-        var divUpd = $(this).parent().find('.value'),
-            newVal = parseInt(divUpd.text(), 10) + 1;
-        divUpd.text(newVal);
+        var divUpd = $(this).parent().find('.value');
+        var purchaseCartProductId = $(this).attr('purchaseCartProductId');
+        console.log(purchaseCartProductId);
+        $.post('/purchasecart/IncreasePrdtCountInPurchaseCartAsync', { Id: purchaseCartProductId },
+            function (value) {
+                if (typeof value != 'boolean') {
+                    $(totalprice).html(`$ ${value.totalPrice}`)
+                    $(divUpd).html(value.productCount);
+                }
+            })
     });
 
     $('.value-minus').on('click', function () {
-        var divUpd = $(this).parent().find('.value'),
-            newVal = parseInt(divUpd.text(), 10) - 1;
-        if (newVal >= 1) divUpd.text(newVal);
+        var divUpd = $(this).parent().find('.value');
+        var purchaseCartProductId = $(this).attr('purchaseCartProductId');
+        $.post('/PurchaseCart/DecreasePrdtCountInPurchaseCartAsync', { Id: purchaseCartProductId },
+            function (value) {
+                if (typeof value != 'boolean') {
+                    $(totalprice).html(`$ ${value.totalprice}`)
+                    $(divUpd).html(value.productCount);
+                }
+            }
+        );
     });
+
 </script>
 <!--quantity-->
 <!--close-->
 <script>
-    $(document).ready(function (c) {
-        $('.close1').on('click', function (c) {
-            $('.rem1').fadeOut('slow', function (c) {
-                $('.rem1').remove();
+    $('.close1').on('click', function (c) {
+        var btn = $(this);
+        purchaseCartProductId = $(this).attr('purchaseCartProductId');
+        $.post('/PurchaseCart/RemoveItemFromPurchaseCart', { Id: purchaseCartProductId }
+            , function (value) {
+                if (typeof value != 'boolean') {
+                    $(btn).parents('.rem1').fadeOut(1200, function (c) {
+                        $(this).remove();
+                    });
+                    $(totalcount).html(`${value.count} Products`)
+                    $(totalprice).html(`$ ${value.totalprice}`)
+                }
             });
-        });
-    });
-</script>
-<script>
-    $(document).ready(function (c) {
-        $('.close2').on('click', function (c) {
-            $('.rem2').fadeOut('slow', function (c) {
-                $('.rem2').remove();
-            });
-        });
-    });
-</script>
-<script>
-    $(document).ready(function (c) {
-        $('.close3').on('click', function (c) {
-            $('.rem3').fadeOut('slow', function (c) {
-                $('.rem3').remove();
-            });
-        });
     });
 </script>
 <!--//close-->
