@@ -87,7 +87,7 @@ namespace BehdadNematiFinalWebProject.Migrations
                     b.ToTable("ProductTypes");
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.brand", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.Brand", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +97,7 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("brands");
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("BehdadNematiFinalWebProject.Models.image", b =>
@@ -108,16 +108,16 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.Property<byte[]>("img");
 
-                    b.Property<int>("product_Id");
+                    b.Property<int>("Product_Id");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("product_Id");
+                    b.HasIndex("Product_Id");
 
                     b.ToTable("images");
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.product", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,7 +125,7 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.Property<string>("EnglishName");
 
-                    b.Property<int>("brand_Id");
+                    b.Property<int>("Brand_Id");
 
                     b.Property<int>("count");
 
@@ -133,18 +133,18 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.Property<int>("price");
 
-                    b.Property<int>("productType_Id");
+                    b.Property<int>("ProductType_Id");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("brand_Id");
+                    b.HasIndex("Brand_Id");
 
-                    b.HasIndex("productType_Id");
+                    b.HasIndex("ProductType_Id");
 
-                    b.ToTable("products");
+                    b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.purchaseCart", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.PurchaseCart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,10 +162,10 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.HasIndex("user_Id");
 
-                    b.ToTable("purchaseCarts");
+                    b.ToTable("PurchaseCarts");
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.purchaseCart_product", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.PurchaseCart_Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -173,47 +173,47 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.Property<int>("count");
 
-                    b.Property<int>("product_Id");
+                    b.Property<int>("Product_Id");
 
-                    b.Property<int>("purchaseCart_Id");
+                    b.Property<int>("PurchaseCart_Id");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("product_Id");
+                    b.HasIndex("Product_Id");
 
-                    b.HasIndex("purchaseCart_Id");
+                    b.HasIndex("PurchaseCart_Id");
 
-                    b.ToTable("purchaseCart_Products");
+                    b.ToTable("PurchaseCart_Products");
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.specialOffers", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.SpecialOffers", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("product_Id");
+                    b.Property<int>("Product_Id");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("product_Id");
+                    b.HasIndex("Product_Id");
 
-                    b.ToTable("specialOffers");
+                    b.ToTable("SpecialOffers");
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.topProduct", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.TopProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("product_Id");
+                    b.Property<int>("Product_Id");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("product_Id");
+                    b.HasIndex("Product_Id");
 
-                    b.ToTable("topProducts");
+                    b.ToTable("TopProducts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -332,58 +332,58 @@ namespace BehdadNematiFinalWebProject.Migrations
 
             modelBuilder.Entity("BehdadNematiFinalWebProject.Models.image", b =>
                 {
-                    b.HasOne("BehdadNematiFinalWebProject.Models.product", "product")
+                    b.HasOne("BehdadNematiFinalWebProject.Models.Product", "Product")
                         .WithMany("images")
-                        .HasForeignKey("product_Id")
+                        .HasForeignKey("Product_Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.product", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.Product", b =>
                 {
-                    b.HasOne("BehdadNematiFinalWebProject.Models.brand", "brand")
-                        .WithMany("products")
-                        .HasForeignKey("brand_Id")
+                    b.HasOne("BehdadNematiFinalWebProject.Models.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("Brand_Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BehdadNematiFinalWebProject.Models.ProductType", "productType")
-                        .WithMany("products")
-                        .HasForeignKey("productType_Id")
+                    b.HasOne("BehdadNematiFinalWebProject.Models.ProductType", "ProductType")
+                        .WithMany("Products")
+                        .HasForeignKey("ProductType_Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.purchaseCart", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.PurchaseCart", b =>
                 {
                     b.HasOne("BehdadNematiFinalWebProject.Areas.Identity.Data.ApplicationUser", "user")
                         .WithMany()
                         .HasForeignKey("user_Id");
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.purchaseCart_product", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.PurchaseCart_Product", b =>
                 {
-                    b.HasOne("BehdadNematiFinalWebProject.Models.product", "product")
-                        .WithMany("purchaseCart_Products")
-                        .HasForeignKey("product_Id")
+                    b.HasOne("BehdadNematiFinalWebProject.Models.Product", "Product")
+                        .WithMany("PurchaseCart_Products")
+                        .HasForeignKey("Product_Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BehdadNematiFinalWebProject.Models.purchaseCart", "purchaseCart")
+                    b.HasOne("BehdadNematiFinalWebProject.Models.PurchaseCart", "PurchaseCart")
                         .WithMany()
-                        .HasForeignKey("purchaseCart_Id")
+                        .HasForeignKey("PurchaseCart_Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.specialOffers", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.SpecialOffers", b =>
                 {
-                    b.HasOne("BehdadNematiFinalWebProject.Models.product", "product")
-                        .WithMany("specialOffers")
-                        .HasForeignKey("product_Id")
+                    b.HasOne("BehdadNematiFinalWebProject.Models.Product", "Product")
+                        .WithMany("SpecialOffers")
+                        .HasForeignKey("Product_Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.topProduct", b =>
+            modelBuilder.Entity("BehdadNematiFinalWebProject.Models.TopProduct", b =>
                 {
-                    b.HasOne("BehdadNematiFinalWebProject.Models.product", "product")
-                        .WithMany("topProducts")
-                        .HasForeignKey("product_Id")
+                    b.HasOne("BehdadNematiFinalWebProject.Models.Product", "Product")
+                        .WithMany("TopProducts")
+                        .HasForeignKey("Product_Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

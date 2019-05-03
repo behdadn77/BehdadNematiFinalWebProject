@@ -11,6 +11,6 @@ namespace BehdadNematiFinalWebProject.Models
         public int Id { get; set; }
         public int TypeId { get; set; }
         [ForeignKey("TypeId")]
-        public ProductType productType { get; set; }
+        public ProductType ProductType { get; set; }
     }
 }

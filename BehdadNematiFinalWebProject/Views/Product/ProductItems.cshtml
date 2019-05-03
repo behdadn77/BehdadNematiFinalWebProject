@@ -14,8 +14,8 @@
             {
                 break;
             }
-            <div class="col-md-3 product-men women_two shop-gd">
-                <div class="product-googles-info googles">
+            <div class="col-md-3 Product-men women_two shop-gd">
+                <div class="Product-googles-info googles">
                     <div class="men-pro-i">
                         <div class="men-thumb-i">
                             @*@{
@@ -29,15 +29,15 @@
 
                             <div class="men-cart-pro">
                                 <div class="inner-men-cart-pro">
-                                    <a href="single.html" class="link-product-add-cart">Quick View</a>
+                                    <a href="single.html" class="link-Product-add-cart">Quick View</a>
                                 </div>
                             </div>
-                            <span class="product-new-top">New</span>
+                            <span class="Product-new-top">New</span>
                         </div>
-                        <div class="i-info-product">
-                            <div class="info-product-price">
+                        <div class="i-info-Product">
+                            <div class="info-Product-price">
                                 <div class="grid_meta">
-                                    <div class="product_price">
+                                    <div class="Product_price">
                                         <h4>
                                             <a href="single.html">@Model[j].EnglishName</a>
                                         </h4>
@@ -76,7 +76,7 @@
                                 <div class="googles single-i hvr-outline-out">
                                     @if (Model[j].SelectedInCart != true)
                                     {
-                                        @*<form asp-action="AddItemToPurchaseCartAsync" asp-controller="purchaseCart" enctype="multipart/form-data">
+                                        @*<form asp-action="AddItemToPurchaseCartAsync" asp-controller="PurchaseCart" enctype="multipart/form-data">
                                             <input type="hidden" name="Id" value="@Model[j].Id" />
                                             <button type="submit" class="googles-cart pgoogles-cart" >
                                                 <i class="fas fa-cart-plus"></i>
@@ -101,7 +101,7 @@
         $('.googles-cart').on('click', function () {
             var Id = $(this).attr('ProductId')
             var Button = $(this);
-            $.post('/purchaseCart/AddItemToPurchaseCartAsync', { Id: Id },
+            $.post('/PurchaseCart/AddItemToPurchaseCartAsync', { Id: Id },
                 function (value) {
                     if (value) {
                         $(Button).remove();

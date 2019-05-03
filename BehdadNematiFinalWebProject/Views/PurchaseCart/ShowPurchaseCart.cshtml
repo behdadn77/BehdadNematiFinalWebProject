@@ -11,7 +11,7 @@
       rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
 
-@model List<purchaseCart_product>
+@model List<PurchaseCart_Product>
 
 <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
     <div class="container">
@@ -38,10 +38,10 @@
                         @foreach (var item in Model)
                         {
                             <tr class="rem1">
-                                <td class="invert">@item.product_Id</td>
+                                <td class="invert">@item.Product_Id</td>
                                 <td class="invert-image">
                                     <a href="single.html">
-                                        @foreach (var item2 in item.product.images)
+                                        @foreach (var item2 in item.Product.images)
                                         {
                                             <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item2.img)}")" alt=" " class="img-responsive">
                                         }
@@ -50,20 +50,20 @@
                                 <td class="invert">
                                     <div class="quantity">
                                         <div class="quantity-select">
-                                            <div class="entry value-minus" purchaseCartProductId="@item.Id">&nbsp;</div>
+                                            <div class="entry value-minus" PurchaseCartProductId="@item.Id">&nbsp;</div>
                                             <div class="entry value">
                                                 <span>@item.count</span>
                                             </div>
-                                            <div class="entry value-plus active" purchaseCartProductId="@item.Id">&nbsp;</div>
+                                            <div class="entry value-plus active" PurchaseCartProductId="@item.Id">&nbsp;</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="invert">@item.product.EnglishName</td>
+                                <td class="invert">@item.Product.EnglishName</td>
 
-                                <td class="invert">$@item.product.price</td>
+                                <td class="invert">$@item.Product.price</td>
                                 <td class="invert">
                                     <div class="rem">
-                                        <div purchaseCartProductId="@item.Id"  class="close1"> </div>
+                                        <div PurchaseCartProductId="@item.Id"  class="close1"> </div>
                                     </div>
 
                                 </td>
@@ -157,25 +157,25 @@
 <script>
     $('.value-plus').on('click', function () {
         var divUpd = $(this).parent().find('.value');
-        var purchaseCartProductId = $(this).attr('purchaseCartProductId');
-        console.log(purchaseCartProductId);
-        $.post('/purchasecart/IncreasePrdtCountInPurchaseCartAsync', { Id: purchaseCartProductId },
+        var PurchaseCartProductId = $(this).attr('PurchaseCartProductId');
+        console.log(PurchaseCartProductId);
+        $.post('/PurchaseCart/IncreasePrdtCountInPurchaseCartAsync', { Id: PurchaseCartProductId },
             function (value) {
                 if (typeof value != 'boolean') {
                     $(totalprice).html(`$ ${value.totalPrice}`)
-                    $(divUpd).html(value.productCount);
+                    $(divUpd).html(value.ProductCount);
                 }
             })
     });
 
     $('.value-minus').on('click', function () {
         var divUpd = $(this).parent().find('.value');
-        var purchaseCartProductId = $(this).attr('purchaseCartProductId');
-        $.post('/PurchaseCart/DecreasePrdtCountInPurchaseCartAsync', { Id: purchaseCartProductId },
+        var PurchaseCartProductId = $(this).attr('PurchaseCartProductId');
+        $.post('/PurchaseCart/DecreasePrdtCountInPurchaseCartAsync', { Id: PurchaseCartProductId },
             function (value) {
                 if (typeof value != 'boolean') {
                     $(totalprice).html(`$ ${value.totalprice}`)
-                    $(divUpd).html(value.productCount);
+                    $(divUpd).html(value.ProductCount);
                 }
             }
         );
@@ -187,8 +187,8 @@
 <script>
     $('.close1').on('click', function (c) {
         var btn = $(this);
-        purchaseCartProductId = $(this).attr('purchaseCartProductId');
-        $.post('/PurchaseCart/RemoveItemFromPurchaseCart', { Id: purchaseCartProductId }
+        PurchaseCartProductId = $(this).attr('PurchaseCartProductId');
+        $.post('/PurchaseCart/RemoveItemFromPurchaseCart', { Id: PurchaseCartProductId }
             , function (value) {
                 if (typeof value != 'boolean') {
                     $(btn).parents('.rem1').fadeOut(1200, function (c) {

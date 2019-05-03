@@ -25,14 +25,14 @@ namespace BehdadNematiFinalWebProject.Controllers
             var user = await userManager.FindByNameAsync(User.Identity.Name);
             if (user != null)
             {
-                var Purchscart = db.purchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).LastOrDefault();
+                var Purchscart = db.PurchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).LastOrDefault();
                 if (Purchscart != null)
                 {
                                     ViewData["totalprice"] =
                     (await GetPurchaseCartProductTotalPriceAsync()).ToString("C").Replace("/00", "");//currency
 
-                    var purchaseCartProducts = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == Purchscart.Id);
-                    return View(purchaseCartProducts.Include(x => x.product).Include(x => x.product.images).ToList());
+                    var PurchaseCartProducts = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == Purchscart.Id);
+                    return View(PurchaseCartProducts.Include(x => x.Product).Include(x => x.Product.images).ToList());
                 }
                 return View("Purchase cart not found!");
 
@@ -46,15 +46,15 @@ namespace BehdadNematiFinalWebProject.Controllers
             var user = await userManager.FindByNameAsync(User.Identity.Name);
             if (user != null)
             {
-                var Purchscart = db.purchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).FirstOrDefault();
+                var Purchscart = db.PurchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).FirstOrDefault();
                 if (Purchscart == null)
                 {
-                    Purchscart = new purchaseCart { user_Id = user.Id, isPaid = false, pDate = DateTime.Now };
+                    Purchscart = new PurchaseCart { user_Id = user.Id, isPaid = false, pDate = DateTime.Now };
                     db.Add(Purchscart);
                     db.SaveChanges();
                 }
-                var purchaseCartproduct = new purchaseCart_product { purchaseCart_Id = Purchscart.Id, count = 1, product_Id = Id };
-                db.Add(purchaseCartproduct);
+                var PurchaseCartProduct = new PurchaseCart_Product { PurchaseCart_Id = Purchscart.Id, count = 1, Product_Id = Id };
+                db.Add(PurchaseCartProduct);
                 db.SaveChanges();
                 return Json(true);
             }
@@ -65,7 +65,7 @@ namespace BehdadNematiFinalWebProject.Controllers
         {
             try
             {
-                purchaseCart_product prchsCartPrduct = db.purchaseCart_Products.Find(Id);
+                PurchaseCart_Product prchsCartPrduct = db.PurchaseCart_Products.Find(Id);
                 db.Remove(prchsCartPrduct);
                 db.SaveChanges();
                 return Json(new { count= await GetPurchaseCartProductCountAsync(),
@@ -84,10 +84,10 @@ namespace BehdadNematiFinalWebProject.Controllers
             var user = await userManager.FindByNameAsync(User.Identity.Name);
             if (user != null)
             {
-                var purchaseCart = db.purchaseCarts.Where(x => x.user_Id == user.Id && !x.isPaid).FirstOrDefault();
-                if (purchaseCart != null)
+                var PurchaseCart = db.PurchaseCarts.Where(x => x.user_Id == user.Id && !x.isPaid).FirstOrDefault();
+                if (PurchaseCart != null)
                 {
-                    var p = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == purchaseCart.Id).ToList();
+                    var p = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == PurchaseCart.Id).ToList();
                     count = p.Count();
                     //p.Sum(x=>x.count);
                     //p.ForEach(x => {
@@ -104,11 +104,11 @@ namespace BehdadNematiFinalWebProject.Controllers
             var user = await userManager.FindByNameAsync(User.Identity.Name);
             if (user != null)
             {
-                var purchaseCart = db.purchaseCarts.Where(x => x.user_Id == user.Id && !x.isPaid).FirstOrDefault();
-                if (purchaseCart != null)
+                var PurchaseCart = db.PurchaseCarts.Where(x => x.user_Id == user.Id && !x.isPaid).FirstOrDefault();
+                if (PurchaseCart != null)
                 {
-                    var p = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == purchaseCart.Id).Include(x=>x.product).ToList();
-                    totalPrice = p.Sum(x=>x.count*x.product.price);
+                    var p = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == PurchaseCart.Id).Include(x=>x.Product).ToList();
+                    totalPrice = p.Sum(x=>x.count*x.Product.price);
                 }
             }
             return totalPrice;
@@ -117,10 +117,10 @@ namespace BehdadNematiFinalWebProject.Controllers
         [Authorize]
         public async Task<IActionResult> IncreasePrdtCountInPurchaseCartAsync(int Id)
         {
-            var prdt = db.purchaseCart_Products.Find(Id);
+            var prdt = db.PurchaseCart_Products.Find(Id);
             if (prdt !=null)
             {
-            int AvailablePrdtCount= db.products.Find(prdt.product_Id).count;
+            int AvailablePrdtCount= db.Products.Find(prdt.Product_Id).count;
                 if ((prdt.count)+1 <= AvailablePrdtCount)
                 {
                     prdt.count++;
@@ -128,7 +128,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                     return Json(new {
                         totalPrice = await GetPurchaseCartProductTotalPriceAsync(),
                        // count = await GetPurchaseCartProductCountAsync(),
-                        productCount = prdt.count
+                        ProductCount = prdt.count
                     });
                 }
                 else
@@ -141,10 +141,10 @@ namespace BehdadNematiFinalWebProject.Controllers
         [Authorize]
         public async Task<IActionResult> DecreasePrdtCountInPurchaseCartAsync(int Id)
         {
-            var prdt = db.purchaseCart_Products.Find(Id);
+            var prdt = db.PurchaseCart_Products.Find(Id);
             if (prdt != null)
             {
-                int AvailablePrdtCount = db.products.Find(prdt.product_Id).count;
+                int AvailablePrdtCount = db.Products.Find(prdt.Product_Id).count;
                 if (prdt.count >1)
                 {
                     prdt.count--;
@@ -153,7 +153,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                     {
                         totalPrice = await GetPurchaseCartProductTotalPriceAsync(),
                         //count = await GetPurchaseCartProductCountAsync(),
-                        productCount = prdt.count
+                        ProductCount = prdt.count
                     });
                 }
                 else

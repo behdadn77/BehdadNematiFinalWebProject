@@ -7,7 +7,7 @@ using BehdadNematiFinalWebProject.Areas.Identity.Data;
 
 namespace BehdadNematiFinalWebProject.Models
 {
-    public class purchaseCart
+    public class PurchaseCart
     {
         public int Id { get; set; }
         public string user_Id { get; set; }

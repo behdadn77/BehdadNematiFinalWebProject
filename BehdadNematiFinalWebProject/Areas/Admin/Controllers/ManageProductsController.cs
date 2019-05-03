@@ -32,7 +32,7 @@ namespace BehdadNematiFinalWebProject.Controllers
 
         public IActionResult ProductBrandComboItems()
         {
-            return PartialView(db.brands.ToList());
+            return PartialView(db.Brands.ToList());
         }
         //---------Add Product---------//
         public IActionResult AddProduct()
@@ -42,13 +42,13 @@ namespace BehdadNematiFinalWebProject.Controllers
 
         public IActionResult AddProductConfirm(ProductViewModel obj)
         {
-            product p = new product()
+            Product p = new Product()
             {
                 EnglishName = obj.EnglishName,
                 price = obj.price,
                 count=obj.count,
-                productType_Id=obj.productType_Id,
-                brand_Id=obj.brand_Id        
+                ProductType_Id=obj.ProductType_Id,
+                Brand_Id=obj.Brand_Id        
             };
             db.Add(p);
             if (db.SaveChanges()!=0)
@@ -69,7 +69,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                             item.OpenReadStream().Read(b, 0, b.Length);
                             image img = new image();
                             img.img = b;
-                            img.product_Id = p.Id;
+                            img.Product_Id = p.Id;
                             db.images.Add(img);
                         }
                         else
@@ -84,7 +84,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                 }
                 else
                 {
-                    db.products.Remove(p); //roll back
+                    db.Products.Remove(p); //roll back
                     db.SaveChanges();
                 }
             }
@@ -94,8 +94,8 @@ namespace BehdadNematiFinalWebProject.Controllers
         //-------Edit Product-------//
         public IActionResult EditProduct(int id)
         {
-            //product p = db.products.Find(id);
-            product p = db.products.Include(x=>x.images).Where(x=>x.Id==id).First();
+            //Product p = db.Products.Find(id);
+            Product p = db.Products.Include(x=>x.images).Where(x=>x.Id==id).First();
             if (p!=null)
             {
                 List<string> img = new List<string>();
@@ -103,27 +103,27 @@ namespace BehdadNematiFinalWebProject.Controllers
                 {
                     img.Add($"data:image;base64,{Convert.ToBase64String(item.img)}");
                 }
-                ProductViewModel productViewModel = new ProductViewModel()
+                ProductViewModel ProductViewModel = new ProductViewModel()
                 {
                     id = p.Id,
                     EnglishName = p.EnglishName,
                     count = p.count,
                     price = p.price,
-                    brand_Id = p.brand_Id,
-                    productType_Id = p.productType_Id,
+                    Brand_Id = p.Brand_Id,
+                    ProductType_Id = p.ProductType_Id,
                     imagesBase64List = img
                 };
-                return View(productViewModel);
+                return View(ProductViewModel);
 
             }
             return View("Product not found!");
         }
         public IActionResult EditProductConfirm(ProductViewModel obj)
         {
-            product p =  db.products.Find(obj.id);
+            Product p =  db.Products.Find(obj.id);
             p.EnglishName = obj.EnglishName;
-            p.brand_Id = obj.brand_Id;
-            p.productType_Id = obj.productType_Id;
+            p.Brand_Id = obj.Brand_Id;
+            p.ProductType_Id = obj.ProductType_Id;
             p.count = obj.count;
             p.price = obj.price;
             if (db.SaveChanges()!=0)
@@ -135,13 +135,13 @@ namespace BehdadNematiFinalWebProject.Controllers
         //-------Delete Product-----//
         public IActionResult DeleteProduct(int id)
         {
-            product p = db.products.Find(id);
+            Product p = db.Products.Find(id);
             if (p!=null)
             {
                 db.Remove(p);
                 if (db.SaveChanges()!=0)
                 {
-                    return RedirectToAction("productlist");
+                    return RedirectToAction("Productlist");
                 }
                 return View("Error");
             }
@@ -155,7 +155,7 @@ namespace BehdadNematiFinalWebProject.Controllers
 
         public IActionResult ProductListItems(string Search, int TypeId = 0, int BrandId = 0, int Page = 1)
         {
-            List<product> p = new List<product>();
+            List<Product> p = new List<Product>();
             if (Search==null)
             {
                 p = FindProductByBrandType(TypeId, BrandId).ToList();
@@ -171,52 +171,52 @@ namespace BehdadNematiFinalWebProject.Controllers
             // return PartialView(p.GetRange(Page,(Page+10<p.Count?Page+10: p.Count)));
             return PartialView(p); // need to add infinit scroll with ajax later !!!
         }
-        public List<product> FindProductByBrandType(int TypeId, int BrandId)
+        public List<Product> FindProductByBrandType(int TypeId, int BrandId)
         {
-            List<product> p = db.products.Include(x => x.images).Include(x => x.brand).Include(x => x.productType).ToList();
-            if (TypeId == 0 && BrandId == 0) //brand and type are not specified
+            List<Product> p = db.Products.Include(x => x.images).Include(x => x.Brand).Include(x => x.ProductType).ToList();
+            if (TypeId == 0 && BrandId == 0) //Brand and type are not specified
             {
                 return p;
             }
-            else if (TypeId != 0 && BrandId == 0) //brand is not specified
+            else if (TypeId != 0 && BrandId == 0) //Brand is not specified
             {
-                return p.Where(x => x.productType_Id == TypeId).ToList();
+                return p.Where(x => x.ProductType_Id == TypeId).ToList();
             }
             else if (BrandId != 0 && TypeId == 0) //Type is not specified
             {
-                return p.Where(x => x.brand_Id == BrandId).ToList();
+                return p.Where(x => x.Brand_Id == BrandId).ToList();
             }
-            else //both brand and type are selected
+            else //both Brand and type are selected
             {
-                return p.Where(x => x.brand_Id == BrandId && x.productType_Id == TypeId).ToList();
+                return p.Where(x => x.Brand_Id == BrandId && x.ProductType_Id == TypeId).ToList();
             }
             
         }
-        //------select Top products----//
+        //------select Top Products----//
         public IActionResult SetTopProducts()
         {    
             return View(db.ProductTypes.ToList()); 
         }
         public IActionResult TypeProductsItems(int TypeId)
         {
-            return PartialView(db.products.Where(x=>x.productType_Id==TypeId).ToList());
+            return PartialView(db.Products.Where(x=>x.ProductType_Id==TypeId).ToList());
         }
         //public IActionResult AddRemove TopProductCategory(int TypeId)
         //{
 
         //}
-        //-----insert brand----//
+        //-----insert Brand----//
         public IActionResult insertBrand()
         {
             return View();
         }
-        public IActionResult insertBrandConfirm(brandViewModels models)
+        public IActionResult insertBrandConfirm(BrandViewModels models)
         {
-            brand objbrand = new brand()
+            Brand objBrand = new Brand()
             {
                 name = models.name
             };
-            db.Add(objbrand);
+            db.Add(objBrand);
             db.SaveChanges();
             return RedirectToAction("insert");
         }

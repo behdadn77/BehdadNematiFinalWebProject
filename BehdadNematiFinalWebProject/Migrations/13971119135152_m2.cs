@@ -9,7 +9,7 @@ namespace BehdadNematiFinalWebProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "brands",
+                name: "Brands",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -18,7 +18,7 @@ namespace BehdadNematiFinalWebProject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_brands", x => x.Id);
+                    table.PrimaryKey("PK_Brands", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,7 +35,7 @@ namespace BehdadNematiFinalWebProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "purchaseCarts",
+                name: "PurchaseCarts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -47,9 +47,9 @@ namespace BehdadNematiFinalWebProject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_purchaseCarts", x => x.Id);
+                    table.PrimaryKey("PK_PurchaseCarts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_purchaseCarts_AspNetUsers_user_Id",
+                        name: "FK_PurchaseCarts_AspNetUsers_user_Id",
                         column: x => x.user_Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -57,7 +57,7 @@ namespace BehdadNematiFinalWebProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "products",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -67,21 +67,21 @@ namespace BehdadNematiFinalWebProject.Migrations
                     count = table.Column<int>(nullable: false),
                     price = table.Column<int>(nullable: false),
                     isAproved = table.Column<bool>(nullable: false),
-                    productType_Id = table.Column<int>(nullable: false),
-                    brand_Id = table.Column<int>(nullable: false)
+                    ProductType_Id = table.Column<int>(nullable: false),
+                    Brand_Id = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_products", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_products_brands_brand_Id",
-                        column: x => x.brand_Id,
-                        principalTable: "brands",
+                        name: "FK_Products_Brands_Brand_Id",
+                        column: x => x.Brand_Id,
+                        principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_products_ProductTypes_productType_Id",
-                        column: x => x.productType_Id,
+                        name: "FK_Products_ProductTypes_ProductType_Id",
+                        column: x => x.ProductType_Id,
                         principalTable: "ProductTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -94,123 +94,123 @@ namespace BehdadNematiFinalWebProject.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     img = table.Column<byte[]>(nullable: true),
-                    product_Id = table.Column<int>(nullable: false)
+                    Product_Id = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_images", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_images_products_product_Id",
-                        column: x => x.product_Id,
-                        principalTable: "products",
+                        name: "FK_images_Products_Product_Id",
+                        column: x => x.Product_Id,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "purchaseCart_Products",
+                name: "PurchaseCart_Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    product_Id = table.Column<int>(nullable: false),
-                    purchaseCart_Id = table.Column<int>(nullable: false),
+                    Product_Id = table.Column<int>(nullable: false),
+                    PurchaseCart_Id = table.Column<int>(nullable: false),
                     count = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_purchaseCart_Products", x => x.Id);
+                    table.PrimaryKey("PK_PurchaseCart_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_purchaseCart_Products_products_product_Id",
-                        column: x => x.product_Id,
-                        principalTable: "products",
+                        name: "FK_PurchaseCart_Products_Products_Product_Id",
+                        column: x => x.Product_Id,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_purchaseCart_Products_purchaseCarts_purchaseCart_Id",
-                        column: x => x.purchaseCart_Id,
-                        principalTable: "purchaseCarts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "specialOffers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    product_Id = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_specialOffers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_specialOffers_products_product_Id",
-                        column: x => x.product_Id,
-                        principalTable: "products",
+                        name: "FK_PurchaseCart_Products_PurchaseCarts_PurchaseCart_Id",
+                        column: x => x.PurchaseCart_Id,
+                        principalTable: "PurchaseCarts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "topProducts",
+                name: "SpecialOffers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    product_Id = table.Column<int>(nullable: false)
+                    Product_Id = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_topProducts", x => x.Id);
+                    table.PrimaryKey("PK_SpecialOffers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_topProducts_products_product_Id",
-                        column: x => x.product_Id,
-                        principalTable: "products",
+                        name: "FK_SpecialOffers_Products_Product_Id",
+                        column: x => x.Product_Id,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TopProducts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Product_Id = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TopProducts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TopProducts_Products_Product_Id",
+                        column: x => x.Product_Id,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_images_product_Id",
+                name: "IX_images_Product_Id",
                 table: "images",
-                column: "product_Id");
+                column: "Product_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_brand_Id",
-                table: "products",
-                column: "brand_Id");
+                name: "IX_Products_Brand_Id",
+                table: "Products",
+                column: "Brand_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_productType_Id",
-                table: "products",
-                column: "productType_Id");
+                name: "IX_Products_ProductType_Id",
+                table: "Products",
+                column: "ProductType_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_purchaseCart_Products_product_Id",
-                table: "purchaseCart_Products",
-                column: "product_Id");
+                name: "IX_PurchaseCart_Products_Product_Id",
+                table: "PurchaseCart_Products",
+                column: "Product_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_purchaseCart_Products_purchaseCart_Id",
-                table: "purchaseCart_Products",
-                column: "purchaseCart_Id");
+                name: "IX_PurchaseCart_Products_PurchaseCart_Id",
+                table: "PurchaseCart_Products",
+                column: "PurchaseCart_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_purchaseCarts_user_Id",
-                table: "purchaseCarts",
+                name: "IX_PurchaseCarts_user_Id",
+                table: "PurchaseCarts",
                 column: "user_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_specialOffers_product_Id",
-                table: "specialOffers",
-                column: "product_Id");
+                name: "IX_SpecialOffers_Product_Id",
+                table: "SpecialOffers",
+                column: "Product_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_topProducts_product_Id",
-                table: "topProducts",
-                column: "product_Id");
+                name: "IX_TopProducts_Product_Id",
+                table: "TopProducts",
+                column: "Product_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -219,22 +219,22 @@ namespace BehdadNematiFinalWebProject.Migrations
                 name: "images");
 
             migrationBuilder.DropTable(
-                name: "purchaseCart_Products");
+                name: "PurchaseCart_Products");
 
             migrationBuilder.DropTable(
-                name: "specialOffers");
+                name: "SpecialOffers");
 
             migrationBuilder.DropTable(
-                name: "topProducts");
+                name: "TopProducts");
 
             migrationBuilder.DropTable(
-                name: "purchaseCarts");
+                name: "PurchaseCarts");
 
             migrationBuilder.DropTable(
-                name: "products");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "brands");
+                name: "Brands");
 
             migrationBuilder.DropTable(
                 name: "ProductTypes");

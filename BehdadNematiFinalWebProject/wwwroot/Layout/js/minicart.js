@@ -1635,7 +1635,7 @@ exports.escape = function(html){
 'use strict';
 
 
-var Product = require('./product'),
+var Product = require('./Product'),
     Pubsub = require('./util/pubsub'),
     Storage = require('./util/storage'),
     constants = require('./constants'),
@@ -1692,9 +1692,9 @@ Cart.prototype.add = function add(data) {
         items = this.items(),
         idx = false,
         isExisting = false,
-        product, key, len, i;
+        Product, key, len, i;
 
-    // Prune cart settings data from the product
+    // Prune cart settings data from the Product
     for (key in data) {
         if (constants.SETTINGS.test(key)) {
             this._settings[key] = data[key];
@@ -1702,11 +1702,11 @@ Cart.prototype.add = function add(data) {
         }
     }
 
-    // Look to see if the same product has already been added
+    // Look to see if the same Product has already been added
     for (i = 0, len = items.length; i < len; i++) {
         if (items[i].isEqual(data)) {
-            product = items[i];
-            product.set('quantity', product.get('quantity') + (parseInt(data.quantity, 10) || 1));
+            Product = items[i];
+            Product.set('quantity', Product.get('quantity') + (parseInt(data.quantity, 10) || 1));
             idx = i;
             isExisting = true;
             break;
@@ -1714,13 +1714,13 @@ Cart.prototype.add = function add(data) {
     }
 
     // If not, then try to add it
-    if (!product) {
-        product = new Product(data);
+    if (!Product) {
+        Product = new Product(data);
 
-        if (product.isValid()) {
-            idx = (this._items.push(product) - 1);
+        if (Product.isValid()) {
+            idx = (this._items.push(Product) - 1);
 
-            product.on('change', function (key, value) {
+            Product.on('change', function (key, value) {
                 that.save();
                 that.fire('change', idx, key, value);
             });
@@ -1729,8 +1729,8 @@ Cart.prototype.add = function add(data) {
         }
     }
 
-    if (product) {
-        this.fire('add', idx, product, isExisting);
+    if (Product) {
+        this.fire('add', idx, Product, isExisting);
     }
 
     return idx;
@@ -1786,12 +1786,12 @@ Cart.prototype.discount = function discount(config) {
  * @return {number|string}
  */
 Cart.prototype.subtotal = function subtotal(config) {
-    var products = this.items(),
+    var Products = this.items(),
         result = 0,
         i, len;
 
-    for (i = 0, len = products.length; i < len; i++) {
-        result += products[i].total();
+    for (i = 0, len = Products.length; i < len; i++) {
+        result += Products[i].total();
     }
 
     config = config || {};
@@ -1890,7 +1890,7 @@ Cart.prototype.destroy = function destroy() {
 
 module.exports = Cart;
 
-},{"./constants":11,"./product":13,"./util/currency":15,"./util/mixin":18,"./util/pubsub":19,"./util/storage":20}],10:[function(require,module,exports){
+},{"./constants":11,"./Product":13,"./util/currency":15,"./util/mixin":18,"./util/pubsub":19,"./util/storage":20}],10:[function(require,module,exports){
 'use strict';
 
 
@@ -2055,7 +2055,7 @@ var parser = {
 
 
 /**
- * Creates a new product.
+ * Creates a new Product.
  *
  * @constructor
  * @param {object} data Item data
@@ -2079,7 +2079,7 @@ mixin(Product.prototype, Pubsub.prototype);
 
 
 /**
- * Gets the product data.
+ * Gets the Product data.
  *
  * @param {string} key (Optional) A key to restrict the returned data to.
  * @return {array|string}
@@ -2090,7 +2090,7 @@ Product.prototype.get = function get(key) {
 
 
 /**
- * Sets a value on the product. This is used rather than manually setting the
+ * Sets a value on the Product. This is used rather than manually setting the
  * value so that we can fire a "change" event.
  *
  * @param {string} key
@@ -2110,7 +2110,7 @@ Product.prototype.set = function set(key, value) {
 
 
 /**
- * Parse and return the options for this product.
+ * Parse and return the options for this Product.
  *
  * @return {object}
  */
@@ -2152,7 +2152,7 @@ Product.prototype.options = function options() {
 
 
 /**
- * Parse and return the discount for this product.
+ * Parse and return the discount for this Product.
  *
  * @param {object} config (Optional) Currency formatting options.
  * @return {number|string}
@@ -2185,7 +2185,7 @@ Product.prototype.discount = function discount(config) {
 
 
 /**
- * Parse and return the total without discounts for this product.
+ * Parse and return the total without discounts for this Product.
  *
  * @param {object} config (Optional) Currency formatting options.
  * @return {number|string}
@@ -2209,7 +2209,7 @@ Product.prototype.amount = function amount(config) {
 
 
 /**
- * Parse and return the total for this product.
+ * Parse and return the total for this Product.
  *
  * @param {object} config (Optional) Currency formatting options.
  * @return {number|string}
@@ -2229,9 +2229,9 @@ Product.prototype.total = function total(config) {
 
 
 /**
- * Determine if this product has the same data as another.
+ * Determine if this Product has the same data as another.
  *
- * @param {object|Product} data Other product.
+ * @param {object|Product} data Other Product.
  * @return {boolean}
  */
 Product.prototype.isEqual = function isEqual(data) {
@@ -2265,7 +2265,7 @@ Product.prototype.isEqual = function isEqual(data) {
 
 
 /**
- * Determine if this product is valid.
+ * Determine if this Product is valid.
  *
  * @return {boolean}
  */
@@ -2275,7 +2275,7 @@ Product.prototype.isValid = function isValid() {
 
 
 /**
- * Destroys this product. Fires a "destroy" event.
+ * Destroys this Product. Fires a "destroy" event.
  */
 Product.prototype.destroy = function destroy() {
     this._data = [];
@@ -2968,12 +2968,12 @@ module.exports = viewevents = {
             timer = setTimeout(function () {
                 var idx = parseInt(target.getAttribute(constants.DATA_IDX), 10),
                     cart = that.model.cart,
-                    product = cart.items(idx),
+                    Product = cart.items(idx),
                     quantity = parseInt(target.value, 10);
 
-                if (product) {
+                if (Product) {
                     if (quantity > 0) {
-                        product.set('quantity', quantity);
+                        Product.set('quantity', quantity);
                     } else if (quantity === 0) {
                         cart.remove(idx);
                     }

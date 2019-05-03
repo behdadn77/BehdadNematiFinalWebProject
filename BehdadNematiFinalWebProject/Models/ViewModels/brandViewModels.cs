@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BehdadNematiFinalWebProject.Models.ViewModels
 {
-    public class brandViewModels
+    public class BrandViewModels
     {
         public int Id { get; set; }
         public string name { get; set; }

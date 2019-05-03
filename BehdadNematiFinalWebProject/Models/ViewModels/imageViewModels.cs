@@ -10,6 +10,6 @@ namespace BehdadNematiFinalWebProject.Models.ViewModels
     {
         public int Id { get; set; }
         public IFormFile img { get; set; }
-        public int product_Id { get; set; }
+        public int Product_Id { get; set; }
     }
 }

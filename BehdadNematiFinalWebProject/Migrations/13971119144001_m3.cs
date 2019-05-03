@@ -8,7 +8,7 @@ namespace BehdadNematiFinalWebProject.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "ArabicName",
-                table: "products");
+                table: "Products");
 
             migrationBuilder.AddColumn<string>(
                 name: "firstname",
@@ -33,7 +33,7 @@ namespace BehdadNematiFinalWebProject.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "ArabicName",
-                table: "products",
+                table: "Products",
                 nullable: true);
         }
     }

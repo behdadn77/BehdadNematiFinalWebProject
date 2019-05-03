@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace BehdadNematiFinalWebProject.Models
 {
-    public class brand
+    public class Brand
     {
         public int Id { get; set; }
         public string   name { get; set; }
-        public ICollection<product> products  { get; set; }
+        public ICollection<Product> Products  { get; set; }
     }
 }

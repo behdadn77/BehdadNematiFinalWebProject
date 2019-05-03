@@ -109,7 +109,7 @@ span.sub {
     text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.14);
 }
 
-h1.logo-w3layouts a.navbar-brand {
+h1.logo-w3layouts a.navbar-Brand {
     font-size: 1.5em;
     text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.26);
     color: #454546;
@@ -2071,7 +2071,7 @@ ul.links li a:hover {
         letter-spacing: 1px;
         font-size: 0.9em;
     }
-    h1.logo-w3layouts a.navbar-brand {
+    h1.logo-w3layouts a.navbar-Brand {
        font-size: 1.3em;
     }
     h3.tittle-w3layouts {
@@ -2304,7 +2304,7 @@ ul.links li a:hover {
     h3.tittle-w3layouts.two {
         letter-spacing:2px;
     }
-    h1.logo-w3layouts a.navbar-brand {
+    h1.logo-w3layouts a.navbar-Brand {
         font-size: 1.2em;
     }
     h3.tittle-w3layouts {
@@ -2365,13 +2365,13 @@ ul.links li a:hover {
 }
 
 @media(max-width:375px) {
-   h1.logo-w3layouts a.navbar-brand {
+   h1.logo-w3layouts a.navbar-Brand {
         font-size: 1.1em;
     }
 }
 
 @media(max-width:320px) {
-    h1.logo-w3layouts a.navbar-brand {
+    h1.logo-w3layouts a.navbar-Brand {
         font-size: 1em;
     }
     h3.tittle-w3layouts {

@@ -29,22 +29,22 @@ namespace BehdadNematiFinalWebProject.Controllers
         }
         public async Task<IActionResult> ProductItems()
         {
-            var product = db.products.Include(x => x.images).ToList();
-            List<purchaseCart_product> userPurchCartPrdtProductLst = new List<purchaseCart_product>();
+            var Product = db.Products.Include(x => x.images).ToList();
+            List<PurchaseCart_Product> userPurchCartPrdtProductLst = new List<PurchaseCart_Product>();
             if (User.Identity.Name!=null)
             {
                 var user = await userManager.FindByNameAsync(User.Identity.Name);
                 if (user != null)
                 {
-                    var userPurchCart = db.purchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).ToList();
+                    var userPurchCart = db.PurchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).ToList();
                     if (userPurchCart.Count>0)
                     {
-                         userPurchCartPrdtProductLst = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == userPurchCart.Last().Id).ToList();
+                         userPurchCartPrdtProductLst = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == userPurchCart.Last().Id).ToList();
                     }
                 }
             }
             List<ShowProductViewModel> ProductLst = new List<ShowProductViewModel>();
-            foreach (var item in product)
+            foreach (var item in Product)
             {
                 ShowProductViewModel p = new ShowProductViewModel()
                 {
@@ -53,15 +53,15 @@ namespace BehdadNematiFinalWebProject.Controllers
                     count = item.count,
                     price = item.price,
                     isAproved = item.isAproved,
-                    productType_Id = item.productType_Id,
-                    brand_Id = item.brand_Id,
+                    ProductType_Id = item.ProductType_Id,
+                    Brand_Id = item.Brand_Id,
                     images=item.images,
                     SelectedInCart=false
                 };
                 
-                if (userPurchCartPrdtProductLst.Where(x => x.product_Id == item.Id)!=null)
+                if (userPurchCartPrdtProductLst.Where(x => x.Product_Id == item.Id)!=null)
                 {
-                    if (userPurchCartPrdtProductLst.Where(x => x.product_Id == item.Id).ToList().Count>0)
+                    if (userPurchCartPrdtProductLst.Where(x => x.Product_Id == item.Id).ToList().Count>0)
                     {
                         p.SelectedInCart = true;    
                     }
@@ -70,16 +70,16 @@ namespace BehdadNematiFinalWebProject.Controllers
             }
             return PartialView(ProductLst);
         }
-        //public async Task<IActionResult> checkPrdtInPurchsCart(int productId)
+        //public async Task<IActionResult> checkPrdtInPurchsCart(int ProductId)
         //{
         //    var user = await userManager.FindByNameAsync(User.Identity.Name);
         //    if (user != null)
         //    {
-        //        var userPurchCart = db.purchaseCarts.Single(x => x.user_Id == user.Id && x.isPaid == false);
+        //        var userPurchCart = db.PurchaseCarts.Single(x => x.user_Id == user.Id && x.isPaid == false);
         //        if (userPurchCart != null)
         //        {
-        //            var userPurchCartPrdtProductLst = db.purchaseCart_Products.Where(x => x.purchaseCart_Id == userPurchCart.Id).ToList();
-        //            var st = userPurchCartPrdtProductLst.Where(x => x.product_Id == productId).ToList();
+        //            var userPurchCartPrdtProductLst = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == userPurchCart.Id).ToList();
+        //            var st = userPurchCartPrdtProductLst.Where(x => x.Product_Id == ProductId).ToList();
         //            if (st != null)
         //            {
         //                return Json(true);

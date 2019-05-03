@@ -17,9 +17,9 @@ namespace BehdadNematiFinalWebProject.Models.ViewModels
         [Required]
         public int price { get; set; }
         [Required]
-        public int brand_Id { get; set; }
+        public int Brand_Id { get; set; }
         [Required]
-        public int productType_Id { get; set; }
+        public int ProductType_Id { get; set; }
         public List<IFormFile> Pictures { get; set; }
         public List<string> imagesBase64List {get; set;}
 

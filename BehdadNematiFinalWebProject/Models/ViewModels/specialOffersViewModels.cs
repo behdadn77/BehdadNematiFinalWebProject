@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace BehdadNematiFinalWebProject.Models.ViewModels
 {
-    public class specialOffersViewModels
+    public class SpecialOffersViewModels
     {
         public int Id { get; set; }
-        public int product_Id { get; set; }
+        public int Product_Id { get; set; }
 
     }
 }

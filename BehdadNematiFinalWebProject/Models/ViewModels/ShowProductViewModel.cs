@@ -13,16 +13,16 @@ namespace BehdadNematiFinalWebProject.Models.ViewModels
         public int count { get; set; }
         public int price { get; set; }
         public bool isAproved { get; set; }
-        public int productType_Id { get; set; }
+        public int ProductType_Id { get; set; }
         
-        public ProductType productType { get; set; }
-        public int brand_Id { get; set; }
+        public ProductType ProductType { get; set; }
+        public int Brand_Id { get; set; }
         
-        public brand brand { get; set; }
+        public Brand Brand { get; set; }
 
-        public ICollection<topProduct> topProducts { get; set; }
-        public ICollection<specialOffers> specialOffers { get; set; }
-        public ICollection<purchaseCart_product> purchaseCart_Products { get; set; }
+        public ICollection<TopProduct> TopProducts { get; set; }
+        public ICollection<SpecialOffers> SpecialOffers { get; set; }
+        public ICollection<PurchaseCart_Product> PurchaseCart_Products { get; set; }
         public ICollection<image> images { get; set; }
         public bool SelectedInCart { get; set; }
     }

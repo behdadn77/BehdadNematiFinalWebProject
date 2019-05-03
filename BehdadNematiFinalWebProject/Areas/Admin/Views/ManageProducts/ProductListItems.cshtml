@@ -1,5 +1,5 @@
 ﻿@using BehdadNematiFinalWebProject.Models;
-@model List<product>;
+@model List<Product>;
 @foreach (var item in Model)
 {
     @*<td>Product id</td>
@@ -17,8 +17,8 @@
         <td>@item.EnglishName</td>
         <td>@item.price</td>
         <td>@item.count</td>
-        <td>@item.productType.name</td>
-        <td>@item.brand.name</td>
+        <td>@item.ProductType.name</td>
+        <td>@item.Brand.name</td>
         <td>
             @*<img src="data:image;base64,@System.Convert.ToBase64String(item.images.First().img)" width="8" height="8" />*@
             @foreach (image item1 in item.images)
@@ -27,11 +27,11 @@
             }
         </td>
         <td>
-            <a class="btn btn-warning" asp-area="admin" asp-controller="manageproducts" asp-action="editproduct" asp-route-id="@item.Id">Edit</a>
+            <a class="btn btn-warning" asp-area="admin" asp-controller="manageProducts" asp-action="editProduct" asp-route-id="@item.Id">Edit</a>
         </td>
         <td>
             <a class="btn btn-danger" onclick="return confirm('Are you sure?')" asp-area="admin" 
-                asp-controller="manageproducts" asp-action="deleteproduct" asp-route-id="@item.Id">Delete</a>
+                asp-controller="manageProducts" asp-action="deleteProduct" asp-route-id="@item.Id">Delete</a>
             
         </td>
     </tr>

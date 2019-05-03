@@ -19,12 +19,12 @@
             <span asp-validation-for="count"></span>
         </div>
         <div class="form-group">
-            <select asp-for="productType_Id" id="comboSelectProductType" class="form-control"></select>
-            <span asp-validation-for="productType_Id"></span>
+            <select asp-for="ProductType_Id" id="comboSelectProductType" class="form-control"></select>
+            <span asp-validation-for="ProductType_Id"></span>
         </div>
         <div class="form-group">
-            <select asp-for="brand_Id" id="comboSelectProductBrand" class="form-control"></select>
-            <span asp-validation-for="brand_Id"></span>
+            <select asp-for="Brand_Id" id="comboSelectProductBrand" class="form-control"></select>
+            <span asp-validation-for="Brand_Id"></span>
         </div>
         <input type="hidden" asp-for="id" />
         <div id="FileInputs">
@@ -57,12 +57,12 @@
         $.post('/admin/ManageProducts/ProductTypeComboItems', function (data) {
             $(comboSelectProductType).append(data);
         }).done(function () {
-                $(comboSelectProductType).val(@Model.productType_Id);
+                $(comboSelectProductType).val(@Model.ProductType_Id);
             })
         $.post('/admin/ManageProducts/ProductBrandComboItems', function (data) {
             $(comboSelectProductBrand).append(data);
         }).done(function () {
-            $(comboSelectProductBrand).val(@Model.brand_Id);
+            $(comboSelectProductBrand).val(@Model.Brand_Id);
             })
         $(addMoreImgBtn).click(function () {
             $(FileInputs).append(`
