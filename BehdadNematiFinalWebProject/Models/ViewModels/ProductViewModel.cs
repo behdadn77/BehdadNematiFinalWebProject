@@ -13,15 +13,15 @@ namespace BehdadNematiFinalWebProject.Models.ViewModels
         [Required]
         public string EnglishName { get; set; }
         [Required]
-        public int count { get; set; }
+        public int Count { get; set; }
         [Required]
-        public int price { get; set; }
+        public int Price { get; set; }
         [Required]
         public int Brand_Id { get; set; }
         [Required]
         public int ProductType_Id { get; set; }
         public List<IFormFile> Pictures { get; set; }
-        public List<string> imagesBase64List {get; set;}
+        public List<string> ImagesBase64List {get; set;}
 
     }
 }

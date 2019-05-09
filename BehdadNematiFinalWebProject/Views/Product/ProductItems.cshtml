@@ -22,7 +22,7 @@
                                     List<image> ImgLst = i.images.ToList();
                                 <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(ImgLst.First().img)}")" class="img-fluid">
                                     }*@
-                            @foreach (var item in Model[j].images)
+                            @foreach (var item in Model[j].Images)
                             {
                                 <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.img)}")" class="img-fluid" height="500" width="500">
                             }
@@ -42,7 +42,7 @@
                                             <a href="single.html">@Model[j].EnglishName</a>
                                         </h4>
                                         <div class="grid-price mt-2">
-                                            <span class="money ">$ @Model[j].price</span>
+                                            <span class="money ">$ @Model[j].Price</span>
                                         </div>
                                     </div>
                                     <ul class="stars">

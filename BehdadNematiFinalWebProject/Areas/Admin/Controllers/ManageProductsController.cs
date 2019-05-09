@@ -52,8 +52,8 @@ namespace BehdadNematiFinalWebProject.Controllers
             Product p = new Product()
             {
                 EnglishName = obj.EnglishName,
-                price = obj.price,
-                count = obj.count,
+                price = obj.Price,
+                count = obj.Count,
                 ProductType_Id = obj.ProductType_Id,
                 Brand_Id = obj.Brand_Id
             };
@@ -114,11 +114,11 @@ namespace BehdadNematiFinalWebProject.Controllers
                 {
                     id = p.Id,
                     EnglishName = p.EnglishName,
-                    count = p.count,
-                    price = p.price,
+                    Count = p.count,
+                    Price = p.price,
                     Brand_Id = p.Brand_Id,
                     ProductType_Id = p.ProductType_Id,
-                    imagesBase64List = img
+                    ImagesBase64List = img
                 };
                 return View(ProductViewModel);
 
@@ -131,8 +131,8 @@ namespace BehdadNematiFinalWebProject.Controllers
             p.EnglishName = obj.EnglishName;
             p.Brand_Id = obj.Brand_Id;
             p.ProductType_Id = obj.ProductType_Id;
-            p.count = obj.count;
-            p.price = obj.price;
+            p.count = obj.Count;
+            p.price = obj.Price;
             if (db.SaveChanges() != 0)
             {
                 return RedirectToAction("ProductList");
@@ -221,7 +221,7 @@ namespace BehdadNematiFinalWebProject.Controllers
         {
             Brand objBrand = new Brand()
             {
-                name = models.name
+                name = models.Name
             };
             db.Add(objBrand);
             db.SaveChanges();

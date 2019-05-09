@@ -46,12 +46,12 @@ namespace BehdadNematiFinalWebProject.Controllers
                 {
                     Id = item.Id,
                     EnglishName = item.EnglishName,
-                    count = item.count,
-                    price = item.price,
-                    isAproved = item.isAproved,
+                    Count = item.count,
+                    Price = item.price,
+                    IsAproved = item.isAproved,
                     ProductType_Id = item.ProductType_Id,
                     Brand_Id = item.Brand_Id,
-                    images = item.images,
+                    Images = item.images,
                     SelectedInCart = false
                 };
 
@@ -96,12 +96,12 @@ namespace BehdadNematiFinalWebProject.Controllers
                 {
                     Id = item.Id,
                     EnglishName = item.EnglishName,
-                    count = item.count,
-                    price = item.price,
-                    isAproved = item.isAproved,
+                    Count = item.count,
+                    Price = item.price,
+                    IsAproved = item.isAproved,
                     ProductType_Id = item.ProductType_Id,
                     Brand_Id = item.Brand_Id,
-                    images=item.images,
+                    Images=item.images,
                     SelectedInCart=false
                 };
                 

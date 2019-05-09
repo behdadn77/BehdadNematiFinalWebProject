@@ -11,12 +11,12 @@
             <span asp-validation-for="EnglishName"></span>
         </div>
         <div class="form-group">
-            <input class="form-control" asp-for="price" placeholder="Product Price" />
-            <span asp-validation-for="price"></span>
+            <input class="form-control" asp-for="Price" placeholder="Product Price" />
+            <span asp-validation-for="Price"></span>
         </div>
         <div class="form-group">
-            <input class="form-control" asp-for="count" placeholder="Available Product Count in Storage" />
-            <span asp-validation-for="count"></span>
+            <input class="form-control" asp-for="Count" placeholder="Available Product Count in Storage" />
+            <span asp-validation-for="Count"></span>
         </div>
         <div class="form-group">
             <select asp-for="ProductType_Id" id="comboSelectProductType" class="form-control"></select>
@@ -35,9 +35,9 @@
                     <label class="custom-file-label">Choose...</label>
                 </div>
                 <span asp-validation-for="Pictures"></span>
-                @if (Model.imagesBase64List.Count>0)
+                @if (Model.ImagesBase64List.Count>0)
                 {
-                    <img id="imgPreview" width="60" height="60" style="margin-top:10px; margin-bottom:10px; border-radius:30%" src="@Model.imagesBase64List.First()"/>
+                    <img id="imgPreview" width="60" height="60" style="margin-top:10px; margin-bottom:10px; border-radius:30%" src="@Model.ImagesBase64List.First()"/>
                 }
                 else
                 {

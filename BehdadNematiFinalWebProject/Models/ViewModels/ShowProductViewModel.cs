@@ -9,10 +9,9 @@ namespace BehdadNematiFinalWebProject.Models.ViewModels
     {
         public int Id { get; set; }
         public string EnglishName { get; set; }
-        public string ArabicName { get; set; }
-        public int count { get; set; }
-        public int price { get; set; }
-        public bool isAproved { get; set; }
+        public int Count { get; set; }
+        public int Price { get; set; }
+        public bool IsAproved { get; set; }
         public int ProductType_Id { get; set; }
         
         public ProductType ProductType { get; set; }
@@ -23,7 +22,7 @@ namespace BehdadNematiFinalWebProject.Models.ViewModels
         public ICollection<TopProducts> TopProducts { get; set; }
         public ICollection<SpecialOffers> SpecialOffers { get; set; }
         public ICollection<PurchaseCart_Product> PurchaseCart_Products { get; set; }
-        public ICollection<image> images { get; set; }
+        public ICollection<image> Images { get; set; }
         public bool SelectedInCart { get; set; }
     }
 }
