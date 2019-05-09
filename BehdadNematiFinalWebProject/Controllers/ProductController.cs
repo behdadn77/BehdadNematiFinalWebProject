@@ -32,7 +32,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                 var user = await userManager.FindByNameAsync(User.Identity.Name);
                 if (user != null)
                 {
-                    var userPurchCart = db.PurchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).ToList();
+                    var userPurchCart = db.PurchaseCarts.Where(x => x.User_Id == user.Id && x.IsPaid == false).ToList();
                     if (userPurchCart.Count > 0)
                     {
                         userPurchCartPrdtProductLst = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == userPurchCart.Last().Id).ToList();
@@ -46,9 +46,9 @@ namespace BehdadNematiFinalWebProject.Controllers
                 {
                     Id = item.Id,
                     EnglishName = item.EnglishName,
-                    Count = item.count,
-                    Price = item.price,
-                    IsAproved = item.isAproved,
+                    Count = item.Count,
+                    Price = item.Price,
+                    IsAproved = item.IsAproved,
                     ProductType_Id = item.ProductType_Id,
                     Brand_Id = item.Brand_Id,
                     Images = item.images,
@@ -82,7 +82,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                 var user = await userManager.FindByNameAsync(User.Identity.Name);
                 if (user != null)
                 {
-                    var userPurchCart = db.PurchaseCarts.Where(x => x.user_Id == user.Id && x.isPaid == false).ToList();
+                    var userPurchCart = db.PurchaseCarts.Where(x => x.User_Id == user.Id && x.IsPaid == false).ToList();
                     if (userPurchCart.Count>0)
                     {
                          userPurchCartPrdtProductLst = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == userPurchCart.Last().Id).ToList();
@@ -96,9 +96,9 @@ namespace BehdadNematiFinalWebProject.Controllers
                 {
                     Id = item.Id,
                     EnglishName = item.EnglishName,
-                    Count = item.count,
-                    Price = item.price,
-                    IsAproved = item.isAproved,
+                    Count = item.Count,
+                    Price = item.Price,
+                    IsAproved = item.IsAproved,
                     ProductType_Id = item.ProductType_Id,
                     Brand_Id = item.Brand_Id,
                     Images=item.images,

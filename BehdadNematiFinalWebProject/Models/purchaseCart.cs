@@ -10,11 +10,11 @@ namespace BehdadNematiFinalWebProject.Models
     public class PurchaseCart
     {
         public int Id { get; set; }
-        public string user_Id { get; set; }
+        public string User_Id { get; set; }
         [ForeignKey("user_Id")]
-        public ApplicationUser user { get; set; }
-        public bool isPaid { get; set; } = false;
-        public DateTime pDate { get; set; }
-        public DateTime exDate { get; set; }
+        public ApplicationUser User { get; set; }
+        public bool IsPaid { get; set; } = false;
+        public DateTime PDate { get; set; }
+        public DateTime ExDate { get; set; }
     }
 }

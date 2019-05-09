@@ -43,7 +43,7 @@
                                     <a href="single.html">
                                         @foreach (var item2 in item.Product.images)
                                         {
-                                            <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item2.img)}")" alt=" " class="img-responsive">
+                                            <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item2.Img)}")" alt=" " class="img-responsive">
                                         }
                                     </a>
                                 </td>
@@ -52,7 +52,7 @@
                                         <div class="quantity-select">
                                             <div class="entry value-minus" PurchaseCartProductId="@item.Id">&nbsp;</div>
                                             <div class="entry value">
-                                                <span>@item.count</span>
+                                                <span>@item.Count</span>
                                             </div>
                                             <div class="entry value-plus active" PurchaseCartProductId="@item.Id">&nbsp;</div>
                                         </div>
@@ -60,7 +60,7 @@
                                 </td>
                                 <td class="invert">@item.Product.EnglishName</td>
 
-                                <td class="invert">$@item.Product.price</td>
+                                <td class="invert">$@item.Product.Price</td>
                                 <td class="invert">
                                     <div class="rem">
                                         <div PurchaseCartProductId="@item.Id"  class="close1"> </div>

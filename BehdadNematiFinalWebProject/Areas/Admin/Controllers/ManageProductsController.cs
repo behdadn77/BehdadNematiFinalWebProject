@@ -52,8 +52,8 @@ namespace BehdadNematiFinalWebProject.Controllers
             Product p = new Product()
             {
                 EnglishName = obj.EnglishName,
-                price = obj.Price,
-                count = obj.Count,
+                Price = obj.Price,
+                Count = obj.Count,
                 ProductType_Id = obj.ProductType_Id,
                 Brand_Id = obj.Brand_Id
             };
@@ -75,7 +75,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                         byte[] b = new byte[item.Length];
                         item.OpenReadStream().Read(b, 0, b.Length);
                         image img = new image();
-                        img.img = b;
+                        img.Img = b;
                         img.Product_Id = p.Id;
                         db.images.Add(img);
                     }
@@ -108,14 +108,14 @@ namespace BehdadNematiFinalWebProject.Controllers
                 List<string> img = new List<string>();
                 foreach (var item in p.images)
                 {
-                    img.Add($"data:image;base64,{Convert.ToBase64String(item.img)}");
+                    img.Add($"data:image;base64,{Convert.ToBase64String(item.Img)}");
                 }
                 ProductViewModel ProductViewModel = new ProductViewModel()
                 {
                     id = p.Id,
                     EnglishName = p.EnglishName,
-                    Count = p.count,
-                    Price = p.price,
+                    Count = p.Count,
+                    Price = p.Price,
                     Brand_Id = p.Brand_Id,
                     ProductType_Id = p.ProductType_Id,
                     ImagesBase64List = img
@@ -131,8 +131,8 @@ namespace BehdadNematiFinalWebProject.Controllers
             p.EnglishName = obj.EnglishName;
             p.Brand_Id = obj.Brand_Id;
             p.ProductType_Id = obj.ProductType_Id;
-            p.count = obj.Count;
-            p.price = obj.Price;
+            p.Count = obj.Count;
+            p.Price = obj.Price;
             if (db.SaveChanges() != 0)
             {
                 return RedirectToAction("ProductList");
@@ -221,7 +221,7 @@ namespace BehdadNematiFinalWebProject.Controllers
         {
             Brand objBrand = new Brand()
             {
-                name = models.Name
+                Name = models.Name
             };
             db.Add(objBrand);
             db.SaveChanges();

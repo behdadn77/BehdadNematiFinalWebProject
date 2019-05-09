@@ -15,7 +15,7 @@ namespace BehdadNematiFinalWebProject.Models
         public int PurchaseCart_Id { get; set; }
         [ForeignKey("PurchaseCart_Id")]
         public PurchaseCart PurchaseCart { get; set; }
-        public int count { get; set; }
+        public int Count { get; set; }
 
     }
 }

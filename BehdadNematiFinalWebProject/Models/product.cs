@@ -10,9 +10,9 @@ namespace BehdadNematiFinalWebProject.Models
     {
         public int Id { get; set; }
         public string EnglishName { get; set; }
-        public int count { get; set; }
-        public int price { get; set; }
-        public bool isAproved { get; set; }
+        public int Count { get; set; }
+        public int Price { get; set; }
+        public bool IsAproved { get; set; }
         public int ProductType_Id { get; set; }
         [ForeignKey("ProductType_Id")]
         public ProductType ProductType { get; set; }

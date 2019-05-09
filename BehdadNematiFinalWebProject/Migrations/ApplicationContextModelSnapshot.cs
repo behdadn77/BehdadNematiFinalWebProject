@@ -80,7 +80,7 @@ namespace BehdadNematiFinalWebProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("name");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -95,15 +95,15 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.Property<int>("Brand_Id");
 
+                    b.Property<int>("Count");
+
                     b.Property<string>("EnglishName");
 
+                    b.Property<bool>("IsAproved");
+
+                    b.Property<int>("Price");
+
                     b.Property<int>("ProductType_Id");
-
-                    b.Property<int>("count");
-
-                    b.Property<bool>("isAproved");
-
-                    b.Property<int>("price");
 
                     b.HasKey("Id");
 
@@ -120,7 +120,7 @@ namespace BehdadNematiFinalWebProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("name");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -133,11 +133,13 @@ namespace BehdadNematiFinalWebProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("exDate");
+                    b.Property<DateTime>("ExDate");
 
-                    b.Property<bool>("isPaid");
+                    b.Property<bool>("IsPaid");
 
-                    b.Property<DateTime>("pDate");
+                    b.Property<DateTime>("PDate");
+
+                    b.Property<string>("User_Id");
 
                     b.Property<string>("user_Id");
 
@@ -154,11 +156,11 @@ namespace BehdadNematiFinalWebProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Count");
+
                     b.Property<int>("Product_Id");
 
                     b.Property<int>("PurchaseCart_Id");
-
-                    b.Property<int>("count");
 
                     b.HasKey("Id");
 
@@ -205,9 +207,9 @@ namespace BehdadNematiFinalWebProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Product_Id");
+                    b.Property<byte[]>("Img");
 
-                    b.Property<byte[]>("img");
+                    b.Property<int>("Product_Id");
 
                     b.HasKey("Id");
 
@@ -345,7 +347,7 @@ namespace BehdadNematiFinalWebProject.Migrations
 
             modelBuilder.Entity("BehdadNematiFinalWebProject.Models.PurchaseCart", b =>
                 {
-                    b.HasOne("BehdadNematiFinalWebProject.Areas.Identity.Data.ApplicationUser", "user")
+                    b.HasOne("BehdadNematiFinalWebProject.Areas.Identity.Data.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("user_Id");
                 });

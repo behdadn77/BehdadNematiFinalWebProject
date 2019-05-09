@@ -24,7 +24,7 @@
                                     }*@
                             @foreach (var item in Model[j].Images)
                             {
-                                <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.img)}")" class="img-fluid" height="500" width="500">
+                                <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.Img)}")" class="img-fluid" height="500" width="500">
                             }
 
                             <div class="men-cart-pro">

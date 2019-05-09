@@ -9,7 +9,7 @@ namespace BehdadNematiFinalWebProject.Models
     public class image
     {
         public int Id { get; set; }
-        public byte[] img { get; set; }
+        public byte[] Img { get; set; }
         public int Product_Id { get; set; }
         [ForeignKey("Product_Id")]
         public Product Product { get; set; }
