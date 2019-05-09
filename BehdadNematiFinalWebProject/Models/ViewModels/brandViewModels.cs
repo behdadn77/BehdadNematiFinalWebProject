@@ -8,6 +8,6 @@ namespace BehdadNematiFinalWebProject.Models.ViewModels
     public class BrandViewModels
     {
         public int Id { get; set; }
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 }

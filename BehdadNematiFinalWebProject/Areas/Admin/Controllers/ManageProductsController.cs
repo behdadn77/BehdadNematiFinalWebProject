@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BehdadNematiFinalWebProject.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using BehdadNematiFinalWebProject.Areas.Identity.Data;
 
 namespace BehdadNematiFinalWebProject.Controllers
 {
@@ -16,9 +18,13 @@ namespace BehdadNematiFinalWebProject.Controllers
     public class ManageProductsController : Controller
     {
         ApplicationContext db;
-        public ManageProductsController(ApplicationContext _db)
+
+        UserManager<ApplicationUser> userManager;
+
+        public ManageProductsController(ApplicationContext _db, UserManager<ApplicationUser> _userManager)
         {
             db = _db;
+            userManager = _userManager;
         }
         public IActionResult Index()
         {
@@ -34,6 +40,7 @@ namespace BehdadNematiFinalWebProject.Controllers
         {
             return PartialView(db.Brands.ToList());
         }
+
         //---------Add Product---------//
         public IActionResult AddProduct()
         {
@@ -46,12 +53,12 @@ namespace BehdadNematiFinalWebProject.Controllers
             {
                 EnglishName = obj.EnglishName,
                 price = obj.price,
-                count=obj.count,
-                ProductType_Id=obj.ProductType_Id,
-                Brand_Id=obj.Brand_Id        
+                count = obj.count,
+                ProductType_Id = obj.ProductType_Id,
+                Brand_Id = obj.Brand_Id
             };
             db.Add(p);
-            if (db.SaveChanges()!=0)
+            if (db.SaveChanges() != 0)
             {
                 foreach (var item in obj.Pictures)
                 {
@@ -62,21 +69,21 @@ namespace BehdadNematiFinalWebProject.Controllers
                     {
                         return View("one or more Images may not be valid!");
                     }
-                        var filename = System.IO.Path.GetExtension(item.FileName).ToLower();
-                        if (filename == ".jpg" || filename == ".png")
-                        {
-                            byte[] b = new byte[item.Length];
-                            item.OpenReadStream().Read(b, 0, b.Length);
-                            image img = new image();
-                            img.img = b;
-                            img.Product_Id = p.Id;
-                            db.images.Add(img);
-                        }
-                        else
-                        {
-                            return View("one or more Images may not be valid!");
+                    var filename = System.IO.Path.GetExtension(item.FileName).ToLower();
+                    if (filename == ".jpg" || filename == ".png")
+                    {
+                        byte[] b = new byte[item.Length];
+                        item.OpenReadStream().Read(b, 0, b.Length);
+                        image img = new image();
+                        img.img = b;
+                        img.Product_Id = p.Id;
+                        db.images.Add(img);
+                    }
+                    else
+                    {
+                        return View("one or more Images may not be valid!");
 
-                        }
+                    }
                 };
                 if (db.SaveChanges() != 0)
                 {
@@ -95,8 +102,8 @@ namespace BehdadNematiFinalWebProject.Controllers
         public IActionResult EditProduct(int id)
         {
             //Product p = db.Products.Find(id);
-            Product p = db.Products.Include(x=>x.images).Where(x=>x.Id==id).First();
-            if (p!=null)
+            Product p = db.Products.Include(x => x.images).Where(x => x.Id == id).First();
+            if (p != null)
             {
                 List<string> img = new List<string>();
                 foreach (var item in p.images)
@@ -120,13 +127,13 @@ namespace BehdadNematiFinalWebProject.Controllers
         }
         public IActionResult EditProductConfirm(ProductViewModel obj)
         {
-            Product p =  db.Products.Find(obj.id);
+            Product p = db.Products.Find(obj.id);
             p.EnglishName = obj.EnglishName;
             p.Brand_Id = obj.Brand_Id;
             p.ProductType_Id = obj.ProductType_Id;
             p.count = obj.count;
             p.price = obj.price;
-            if (db.SaveChanges()!=0)
+            if (db.SaveChanges() != 0)
             {
                 return RedirectToAction("ProductList");
             }
@@ -136,10 +143,10 @@ namespace BehdadNematiFinalWebProject.Controllers
         public IActionResult DeleteProduct(int id)
         {
             Product p = db.Products.Find(id);
-            if (p!=null)
+            if (p != null)
             {
                 db.Remove(p);
-                if (db.SaveChanges()!=0)
+                if (db.SaveChanges() != 0)
                 {
                     return RedirectToAction("Productlist");
                 }
@@ -156,7 +163,7 @@ namespace BehdadNematiFinalWebProject.Controllers
         public IActionResult ProductListItems(string Search, int TypeId = 0, int BrandId = 0, int Page = 1)
         {
             List<Product> p = new List<Product>();
-            if (Search==null)
+            if (Search == null)
             {
                 p = FindProductByBrandType(TypeId, BrandId).ToList();
             }
@@ -165,7 +172,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                 p = FindProductByBrandType(TypeId, BrandId).Where(x => x.EnglishName.Contains(Search)
                            ).ToList();
             }
-            
+
             --Page; //array starts at 0 :D
             Page *= 10;
             // return PartialView(p.GetRange(Page,(Page+10<p.Count?Page+10: p.Count)));
@@ -190,16 +197,16 @@ namespace BehdadNematiFinalWebProject.Controllers
             {
                 return p.Where(x => x.Brand_Id == BrandId && x.ProductType_Id == TypeId).ToList();
             }
-            
+
         }
         //------select Top Products----//
         public IActionResult SetTopProducts()
-        {    
-            return View(db.ProductTypes.ToList()); 
+        {
+            return View(db.ProductTypes.ToList());
         }
         public IActionResult TypeProductsItems(int TypeId)
         {
-            return PartialView(db.Products.Where(x=>x.ProductType_Id==TypeId).ToList());
+            return PartialView(db.Products.Where(x => x.ProductType_Id == TypeId).ToList());
         }
         //public IActionResult AddRemove TopProductCategory(int TypeId)
         //{
@@ -222,4 +229,6 @@ namespace BehdadNematiFinalWebProject.Controllers
         }
 
     }
+
 }
+

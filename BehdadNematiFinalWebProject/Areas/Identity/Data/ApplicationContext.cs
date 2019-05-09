@@ -31,7 +31,7 @@ namespace BehdadNematiFinalWebProject.Models
         public DbSet<PurchaseCart> PurchaseCarts { get; set; }
         public DbSet<PurchaseCart_Product> PurchaseCart_Products { get; set; }
         public DbSet<SpecialOffers> SpecialOffers { get; set; }
-        public DbSet<TopProduct> TopProducts { get; set; }
+        public DbSet<TopProducts> TopProducts { get; set; }
 
     }
 }

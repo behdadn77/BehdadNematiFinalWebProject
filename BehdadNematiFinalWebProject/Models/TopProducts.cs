@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BehdadNematiFinalWebProject.Models
 {
-    public class TopProduct
+    public class TopProducts
     {
         public int Id { get; set; }
         public int Product_Id { get; set; }

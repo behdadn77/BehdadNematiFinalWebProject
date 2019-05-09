@@ -20,7 +20,7 @@ namespace BehdadNematiFinalWebProject.Models
         [ForeignKey("Brand_Id")]
         public Brand Brand { get; set; }
 
-        public ICollection<TopProduct> TopProducts { get; set; }
+        public ICollection<TopProducts> TopProducts { get; set; }
         public ICollection<SpecialOffers> SpecialOffers { get; set; }
         public ICollection<PurchaseCart_Product> PurchaseCart_Products { get; set; }
         public ICollection<image> images { get; set; }
