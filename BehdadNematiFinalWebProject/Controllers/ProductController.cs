@@ -24,8 +24,8 @@ namespace BehdadNematiFinalWebProject.Controllers
         }
         public async Task<IActionResult> TopProductsLst()
         {
-            var Product = db.Products.Include(x => x.images).ToList();
-            //var Products =db.TopProducts.Include(x=>x.)
+            //var Product = db.Products.Include(x => x.images).ToList();
+            var Products = db.TopProducts.Include(x => x.Product).ThenInclude(y=>y.images).ToList();
             List<PurchaseCart_Product> userPurchCartPrdtProductLst = new List<PurchaseCart_Product>();
             if (User.Identity.Name != null)
             {
@@ -40,18 +40,18 @@ namespace BehdadNematiFinalWebProject.Controllers
                 }
             }
             List<ShowProductViewModel> ProductLst = new List<ShowProductViewModel>();
-            foreach (var item in Product)
+            foreach (var item in Products)
             {
                 ShowProductViewModel p = new ShowProductViewModel()
                 {
                     Id = item.Id,
-                    EnglishName = item.EnglishName,
-                    Count = item.Count,
-                    Price = item.Price,
-                    IsAproved = item.IsAproved,
-                    ProductType_Id = item.ProductType_Id,
-                    Brand_Id = item.Brand_Id,
-                    Images = item.images,
+                    EnglishName = item.Product.EnglishName,
+                    Count = item.Product.Count,
+                    Price = item.Product.Price,
+                    IsAproved = item.Product.IsAproved,
+                    ProductType_Id = item.Product.ProductType_Id,
+                    Brand_Id = item.Product.Brand_Id,
+                    Images = item.Product.images,
                     SelectedInCart = false
                 };
 

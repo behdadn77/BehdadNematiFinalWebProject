@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BehdadNematiFinalWebProject.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("13980219070021_m1")]
+    [Migration("13980219071011_m1")]
     partial class m1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace BehdadNematiFinalWebProject.Migrations
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedUserName")
+                    b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
@@ -60,7 +60,7 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -68,10 +68,10 @@ namespace BehdadNematiFinalWebProject.Migrations
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
-                    b.HasIndex("NormalizedUserName")
+                    b.HasIndex("NormalizedEmail")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("EmailIndex")
+                        .HasFilter("[NormalizedEmail] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -143,11 +143,9 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.Property<string>("User_Id");
 
-                    b.Property<string>("user_Id");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("user_Id");
+                    b.HasIndex("User_Id");
 
                     b.ToTable("PurchaseCarts");
                 });
@@ -351,7 +349,7 @@ namespace BehdadNematiFinalWebProject.Migrations
                 {
                     b.HasOne("BehdadNematiFinalWebProject.Areas.Identity.Data.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("user_Id");
+                        .HasForeignKey("User_Id");
                 });
 
             modelBuilder.Entity("BehdadNematiFinalWebProject.Models.PurchaseCart_Product", b =>

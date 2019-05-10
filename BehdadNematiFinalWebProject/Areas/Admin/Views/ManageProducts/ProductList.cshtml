@@ -1,23 +1,25 @@
 ﻿
-<h2>ProductList</h2>
-<a class="btn btn-success" asp-area="admin" asp-action="addProduct" asp-controller="manageProducts">Add Products</a>
-<hr />
-<div class="row">
-    <div class="form-group" style="padding-right:10px;">
-        <select id="comboSelectProductType" class="form-control">
-            <option value="" selected="selected">--Catagories--</option>
-        </select>
+    <div class="container col-md-10">
+        <h2>ProductList</h2>
+        <a class="btn btn-success" asp-area="admin" asp-action="addProduct" asp-controller="manageProducts">Add Products</a>
+        <hr />
+        <div class="row">
+            <div class="form-group" style="padding-right:10px;">
+                <select id="comboSelectProductType" class="form-control">
+                    <option value="" selected="selected">--Catagories--</option>
+                </select>
+            </div>
+            <div class="form-group" style="padding-right:10px;">
+                <select id="comboSelectProductBrand" class="form-control">
+                    <option value="" selected="selected">--Brands--</option>
+                </select>
+            </div>
+            <div class="form-group" style="padding-right:10px;">
+                <input class="form-control" id="txtSearch" placeholder="Search" />
+            </div>
+            <button class="btn btn-info" id="btnSearch" style="margin-bottom:20px;">Search 🔍</button>
+        </div>
     </div>
-    <div class="form-group" style="padding-right:10px;">
-        <select id="comboSelectProductBrand" class="form-control">
-            <option value="" selected="selected">--Brands--</option>
-        </select>
-    </div>
-    <div class="form-group" style="padding-right:10px;">
-        <input class="form-control" id="txtSearch" placeholder="Search" />
-    </div>
-    <button class="btn btn-info" id="btnSearch" style="margin-bottom:20px;">Search 🔍</button>
-</div>
 <div class="container col-md-12">
     <table class="table table-bordered solid">
         <thead>

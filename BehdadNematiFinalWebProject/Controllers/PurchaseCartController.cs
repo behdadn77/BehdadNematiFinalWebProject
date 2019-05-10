@@ -20,6 +20,7 @@ namespace BehdadNematiFinalWebProject.Controllers
             userManager = _userManager;
             db = _db;
         }
+        [Authorize]
         public async Task<IActionResult> ShowPurchaseCart()
         {
             var user = await userManager.FindByNameAsync(User.Identity.Name);

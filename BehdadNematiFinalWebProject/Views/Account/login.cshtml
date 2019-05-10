@@ -1,24 +1,34 @@
-﻿
+﻿<link href="~/css/Validation.css" rel="stylesheet" />
 @{
     ViewData["Title"] = "Login";
 }
 @using BehdadNematiFinalWebProject.Models.ViewModels;
 @model LoginViewModel;
-<h1>Login</h1>
 
-<div class="container offset-md-4 col-md-4">
-    <form asp-action="LoginConfirm" asp-controller="Account">
+<div class="container col-md-6">
+    <form asp-action="LoginConfirm" asp-controller="Account" method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <input class="form-control" asp-for="UserName" placeholder="Username"/>
+            <label class="mb-2">Email address or User name</label>
+            <input asp-for="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <span asp-validation-for="Email"></span>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
-            <input class="form-control" asp-for="Password" placeholder="Password" type="password"/>
+            <label class="mb-2">Password</label>
+            <input asp-for="Password" class="form-control" id="exampleInputPassword1">
         </div>
-        <div class="form-group">
-            <input class="form-check" asp-for="RememberMe" value="1"/>
-            <label>Remeber me</label>
+        <div class="form-check mb-2">
+            <input name="RememberMe" type="checkbox" class="form-check-input" value="1">
+            <label class="form-check-label" for="exampleCheck1">Keep me signed in</label>
         </div>
-        <button class="btn btn-success">Login</button>
+        <button type="submit" class="btn btn-primary submit mb-4">Sign In</button>
+
     </form>
-    <a class="btn btn-info" asp-action="GoogleLogin"asp-controller="account">Login with google</a>
-</div> 
+
+
+    <a class="btn btn-info" asp-action="GoogleLogin" asp-controller="account">Login With Google</a>
+
+</div>
+
+
+

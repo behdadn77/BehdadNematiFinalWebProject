@@ -1,5 +1,4 @@
-﻿
-<!--
+﻿<!--
     Author: W3layouts
     Author URL: http://w3layouts.com
     License: Creative Commons Attribution 3.0 Unported
@@ -65,34 +64,55 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                 <div class="col-md-3 top-info-cart text-right mt-lg-4">
                     <ul class="cart-inner-info">
-                        @if (User.Identity.IsAuthenticated == false)
+                        @if (User.IsInRole("admins") == true && User.Identity.IsAuthenticated == true)
                         {
-                            <li class="button-log">
-                                <a class="btn-open" href="#">
-                                    Log in
+                            <li class="">
+                                <a class="nav-link ml-lg-0" href="/Admin/ManageProducts/ProductList">Admin Control Panel</a>
+                            </li>
+                                }
+
+                                @if (User.Identity.IsAuthenticated == false)
+                                {
+                                <li class="">
+                                    <a class="" href="/account/signup">
+                                        Sign up
+                                    </a>
+                                </li>
+                                <li class="button-log">
+                                    <a class="btn-open" href="#">
+                                        Log in
+                                        <span class="fa fa-user" aria-hidden="true"></span>
+                                    </a>
+                                </li>
+
+                                <li class="galssescart galssescart2 cart cart box_1" onclick="alert('You need to login first.')">
+                                    <a class="top_googles_cart" asp-action="login" asp-controller="account">
+                                        My Cart
+                                        <i class="fas fa-cart-arrow-down"></i>
+                                    </a>
+
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li class="button-log">
+                                    <a class="btn-open" href="/account/Logout">
+                                        Log Out
+                                    </a>
                                     <span class="fa fa-user" aria-hidden="true"></span>
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="button-log">
-                                <a class="btn-open" href="/account/Logout">
-                                    Log Out
-                                </a>
-                                <span class="fa fa-user" aria-hidden="true"></span>
-                                @User.Identity.Name
-                            </li>
+                                    @User.Identity.Name
+                                </li>
+                                <li class="galssescart galssescart2 cart cart box_1">
+                                    <a class="top_googles_cart" asp-action="ShowPurchaseCart" asp-controller="PurchaseCart">
+                                        My Cart
+                                        <i class="fas fa-cart-arrow-down"></i>
+                                    </a>
+                                </li>
 
-                        }
+                            }
 
-                        <li class="galssescart galssescart2 cart cart box_1">
-                            <a class="top_googles_cart" asp-action="ShowPurchaseCart" asp-controller="PurchaseCart">
-                                My Cart
-                                <i class="fas fa-cart-arrow-down"></i>
-                            </a>
-                        </li>
-                    </ul>
+                            </ul>
                     <!---->
                     <div class="overlay-login text-left">
                         <button type="button" class="overlay-close1">
@@ -102,14 +122,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <h5 class="text-center mb-4">Login Now</h5>
                             <div class="login p-5 bg-dark mx-auto mw-100">
                                 @*@using BehdadNematiFinalWebProject.Models.ViewModels;
-                                @model LoginViewModel;
-                                    can not use this in layout
-                                    *@
+        @model LoginViewModel;
+            can not use this in layout
+                                *@
 
+                                @*<partial name="/Views/Account/Login.cshtml" />*@
                                 <form asp-action="LoginConfirm" asp-controller="Account" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label class="mb-2">Email address or User name</label>
-                                        <input name="UserName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" required="">
+                                        <input type="email" name="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" required="">
                                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                     </div>
                                     <div class="form-group">
@@ -171,12 +192,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 Home
                                 @*<span class="sr-only">(current)</span>*@
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            @if (User.IsInRole("admins") == true&&User.Identity.IsAuthenticated==true)
-                            {
-                                <a class="nav-link ml-lg-0" href="/Admin/ManageProducts/ProductList">Admin Control Panel</a>
-                            }
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="about.html">About</a>

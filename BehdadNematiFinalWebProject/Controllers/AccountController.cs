@@ -41,7 +41,7 @@ namespace BehdadNematiFinalWebProject.Controllers
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
-            var user = await usermanager.FindByNameAsync(obj.UserName);
+            var user = await usermanager.FindByNameAsync(obj.Email);
             if (user != null)
             {
                 var status = await signInManager.PasswordSignInAsync(user, obj.Password, obj.RememberMe, false);
@@ -69,18 +69,18 @@ namespace BehdadNematiFinalWebProject.Controllers
         {
             var info = await signInManager.GetExternalLoginInfoAsync();
 
-            var username = info.Principal
+            var Email = info.Principal
                 .FindFirst(System.Security.Claims.ClaimTypes.Email).Value;
             var name = info.Principal
                 .FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value;
             var family = info.Principal
                 .FindFirst(System.Security.Claims.ClaimTypes.Surname).Value;
 
-            var founduser = await usermanager.FindByNameAsync(username);
+            var founduser = await usermanager.FindByNameAsync(Email);
             if (founduser == null) //User doesn't exist must be registerd 
             {
                 return RedirectToAction("SignUp", new SignUpViewModel() {
-                    UserName=username,
+                    Email=Email,
                     Name=name,
                     Family=family
                 });
@@ -95,25 +95,25 @@ namespace BehdadNematiFinalWebProject.Controllers
         }
 
         //--------------SignUp------------------//
-        public IActionResult SignUp(SignUpViewModel obj=null)
+        public IActionResult SignUp()
         {
-            if (obj==null)
-            {
                 return View();  
-            }
-            return View(obj);
+            //if (obj==null)
+            //{
+            //}
+            //return View(obj);
         } 
 
         public async Task<IActionResult> SignUpConfirm(SignUpViewModel obj,string returnUrl=null) 
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            var user = await usermanager.FindByNameAsync(obj.UserName); 
+            var user = await usermanager.FindByNameAsync(obj.Email); 
             if (user == null)
             {
                 user = new ApplicationUser
                 {
-                    Email = obj.UserName,
-                    UserName = obj.UserName,
+                    Email = obj.Email,
+                    UserName = obj.Email,
                     PhoneNumber = obj.PhoneNum,
                     FirstName = obj.Name,
                     LastName = obj.Family

@@ -11,7 +11,7 @@ namespace BehdadNematiFinalWebProject.Models
     {
         public int Id { get; set; }
         public string User_Id { get; set; }
-        [ForeignKey("user_Id")]
+        [ForeignKey("User_Id")]
         public ApplicationUser User { get; set; }
         public bool IsPaid { get; set; } = false;
         public DateTime PDate { get; set; }

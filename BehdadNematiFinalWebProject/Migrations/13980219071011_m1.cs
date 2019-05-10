@@ -27,10 +27,10 @@ namespace BehdadNematiFinalWebProject.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
@@ -188,7 +188,6 @@ namespace BehdadNematiFinalWebProject.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     User_Id = table.Column<string>(nullable: true),
-                    user_Id = table.Column<string>(nullable: true),
                     IsPaid = table.Column<bool>(nullable: false),
                     PDate = table.Column<DateTime>(nullable: false),
                     ExDate = table.Column<DateTime>(nullable: false)
@@ -197,8 +196,8 @@ namespace BehdadNematiFinalWebProject.Migrations
                 {
                     table.PrimaryKey("PK_PurchaseCarts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PurchaseCarts_AspNetUsers_user_Id",
-                        column: x => x.user_Id,
+                        name: "FK_PurchaseCarts_AspNetUsers_User_Id",
+                        column: x => x.User_Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -352,11 +351,11 @@ namespace BehdadNematiFinalWebProject.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
+                name: "EmailIndex",
                 table: "AspNetUsers",
-                column: "NormalizedUserName",
+                column: "NormalizedEmail",
                 unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                filter: "[NormalizedEmail] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_images_Product_Id",
@@ -384,9 +383,9 @@ namespace BehdadNematiFinalWebProject.Migrations
                 column: "PurchaseCart_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PurchaseCarts_user_Id",
+                name: "IX_PurchaseCarts_User_Id",
                 table: "PurchaseCarts",
-                column: "user_Id");
+                column: "User_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SpecialOffers_Product_Id",
