@@ -22,7 +22,8 @@ namespace BehdadNematiFinalWebProject.Controllers
             db = _db;
             userManager = _userManager;
         }
-        public async Task<IActionResult> TopProductsLst()
+
+        public async Task<IActionResult> TopProductsItems()
         {
             //var Product = db.Products.Include(x => x.images).ToList();
             var Products = db.TopProducts.Include(x => x.Product).ThenInclude(y=>y.images).ToList();
@@ -68,7 +69,7 @@ namespace BehdadNematiFinalWebProject.Controllers
         }
 
         //------------------------------------------------
-        public IActionResult showProducts()
+        public IActionResult ShowProducts()
         {
             return View();
         }
