@@ -15,19 +15,26 @@ namespace BehdadNematiFinalWebProject.Hubs
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IHttpContextAccessor contextAccessor;
         private readonly ApplicationContext applicationContext;
+        private static List<ApplicationUser> AdminsLst;
 
-        public ChatHub(UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor,ApplicationContext applicationContext)
+        public ChatHub(UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor, ApplicationContext applicationContext)
         {
             this.userManager = userManager;
             this.contextAccessor = contextAccessor;
             this.applicationContext = applicationContext;
+            GetAdminLst().Wait();
         }
-
-        public async Task Register()
+        //find a better solution later
+        public async Task GetAdminLst() => AdminsLst = (List<ApplicationUser>)await userManager.GetUsersInRoleAsync("admins");
+        
+        public async Task RegisterUser()
         {
             var user = await userManager.GetUserAsync(contextAccessor.HttpContext.User);
             user.SignalRConnectionId = Context.ConnectionId;
             await userManager.UpdateAsync(user);
+            await Clients.Client(Context.ConnectionId)
+               .SendAsync("RecivePartnerCredentials", AdminsLst.FirstOrDefault().FirstName,AdminsLst.FirstOrDefault().Email);
+                //get random available admin later
         }
         public override Task OnConnectedAsync()
         {
@@ -43,15 +50,24 @@ namespace BehdadNematiFinalWebProject.Hubs
                 await userManager.UpdateAsync(user);
             }
         }
+        //var AdminLst = ((List<ApplicationUser>)await userManager.GetUsersInRoleAsync("admins")).FirstOrDefault();
 
-        public async Task SendMessageClientToServer(string username, string message)
+        public async Task SendMessageAdminClientToServer(string message, string recipient)
         {
-
-            var user = ((List<ApplicationUser>)await userManager.GetUsersInRoleAsync("admins")).FirstOrDefault();
+            var user = await userManager.FindByEmailAsync(recipient);
             if (user.SignalRConnectionId != null)
             {
                 await Clients.Client(user.SignalRConnectionId)
-                    .SendAsync("SendMessageServerToClient", username, message);
+                    .SendAsync("SendMessageServerToUserClient",message);
+            }
+        }
+        public async Task SendMessageUserClientToServer(string message, string recipient)
+        {
+            var user = await userManager.FindByEmailAsync(recipient);
+            if (user.SignalRConnectionId != null && AdminsLst.Contains(user)) //added for security reasons
+            {
+                await Clients.Client(user.SignalRConnectionId)
+                    .SendAsync("SendMessageServerToAdminClient", message);
             }
         }
 
