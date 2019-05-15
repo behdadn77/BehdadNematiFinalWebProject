@@ -49,9 +49,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <h6>Need Help</h6>
                     <ul>
                         <li>
-                            <i class="fas fa-phone"></i> Call
+                            <a href="">
+                                <i class="fas fa-phone"></i> Online Customer Service
+                            </a>
                         </li>
-                        <li class="number-phone mt-3">12345678099</li>
                     </ul>
                 </div>
                 <div class="col-md-6 logo-w3layouts text-center">
@@ -69,50 +70,50 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li class="">
                                 <a class="nav-link ml-lg-0" href="/Admin/ManageProducts/ProductList">Admin Control Panel</a>
                             </li>
-                                }
+                        }
 
-                                @if (User.Identity.IsAuthenticated == false)
-                                {
-                                <li class="">
-                                    <a class="" href="/account/signup">
-                                        Sign up
-                                    </a>
-                                </li>
-                                <li class="button-log">
-                                    <a class="btn-open" href="#">
-                                        Log in
-                                        <span class="fa fa-user" aria-hidden="true"></span>
-                                    </a>
-                                </li>
-
-                                <li class="galssescart galssescart2 cart cart box_1" onclick="alert('You need to login first.')">
-                                    <a class="top_googles_cart" asp-action="login" asp-controller="account">
-                                        My Cart
-                                        <i class="fas fa-cart-arrow-down"></i>
-                                    </a>
-
-                                </li>
-
-                            }
-                            else
-                            {
-                                <li class="button-log">
-                                    <a class="btn-open" href="/account/Logout">
-                                        Log Out
-                                    </a>
+                        @if (User.Identity.IsAuthenticated == false)
+                        {
+                            <li class="">
+                                <a class="" href="/account/signup">
+                                    Sign up
+                                </a>
+                            </li>
+                            <li class="button-log">
+                                <a class="btn-open" href="#">
+                                    Log in
                                     <span class="fa fa-user" aria-hidden="true"></span>
-                                    @User.Identity.Name
-                                </li>
-                                <li class="galssescart galssescart2 cart cart box_1">
-                                    <a class="top_googles_cart" asp-action="ShowPurchaseCart" asp-controller="PurchaseCart">
-                                        My Cart
-                                        <i class="fas fa-cart-arrow-down"></i>
-                                    </a>
-                                </li>
+                                </a>
+                            </li>
 
-                            }
+                            <li class="galssescart galssescart2 cart cart box_1" onclick="alert('You need to login first.')">
+                                <a class="top_googles_cart" asp-action="login" asp-controller="account">
+                                    My Cart
+                                    <i class="fas fa-cart-arrow-down"></i>
+                                </a>
 
-                            </ul>
+                            </li>
+
+                        }
+                        else
+                        {
+                            <li class="button-log">
+                                <a class="btn-open" href="/account/Logout">
+                                    Log Out
+                                </a>
+                                <span class="fa fa-user" aria-hidden="true"></span>
+                                @User.Identity.Name
+                            </li>
+                            <li class="galssescart galssescart2 cart cart box_1">
+                                <a class="top_googles_cart" asp-action="ShowPurchaseCart" asp-controller="PurchaseCart">
+                                    My Cart
+                                    <i class="fas fa-cart-arrow-down"></i>
+                                </a>
+                            </li>
+
+                        }
+
+                    </ul>
                     <!---->
                     <div class="overlay-login text-left">
                         <button type="button" class="overlay-close1">
@@ -122,8 +123,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <h5 class="text-center mb-4">Login Now</h5>
                             <div class="login p-5 bg-dark mx-auto mw-100">
                                 @*@using BehdadNematiFinalWebProject.Models.ViewModels;
-        @model LoginViewModel;
-            can not use this in layout
+                                    @model LoginViewModel;
+                                        can not use this in layout
                                 *@
 
                                 @*<partial name="/Views/Account/Login.cshtml" />*@

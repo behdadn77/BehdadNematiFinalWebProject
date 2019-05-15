@@ -11,5 +11,6 @@ namespace BehdadNematiFinalWebProject.Areas.Identity.Data
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string SignalRConnectionId { get; set; }
     }
 }
