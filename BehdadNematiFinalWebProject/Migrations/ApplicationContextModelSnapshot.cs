@@ -45,7 +45,7 @@ namespace BehdadNematiFinalWebProject.Migrations
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedEmail")
+                    b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
@@ -56,9 +56,11 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<string>("SignalRConnectionId");
+
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("UserName")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -66,10 +68,10 @@ namespace BehdadNematiFinalWebProject.Migrations
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
-                    b.HasIndex("NormalizedEmail")
+                    b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("EmailIndex")
-                        .HasFilter("[NormalizedEmail] IS NOT NULL");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });

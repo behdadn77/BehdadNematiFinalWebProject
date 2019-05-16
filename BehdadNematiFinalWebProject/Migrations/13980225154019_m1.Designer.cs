@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BehdadNematiFinalWebProject.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("13980219071011_m1")]
+    [Migration("13980225154019_m1")]
     partial class m1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace BehdadNematiFinalWebProject.Migrations
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedEmail")
+                    b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
@@ -58,9 +58,11 @@ namespace BehdadNematiFinalWebProject.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<string>("SignalRConnectionId");
+
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("UserName")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -68,10 +70,10 @@ namespace BehdadNematiFinalWebProject.Migrations
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
-                    b.HasIndex("NormalizedEmail")
+                    b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("EmailIndex")
-                        .HasFilter("[NormalizedEmail] IS NOT NULL");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });

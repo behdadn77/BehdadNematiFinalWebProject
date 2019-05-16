@@ -27,10 +27,10 @@ namespace BehdadNematiFinalWebProject.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
@@ -42,7 +42,8 @@ namespace BehdadNematiFinalWebProject.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    LastName = table.Column<string>(nullable: true),
+                    SignalRConnectionId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -351,11 +352,11 @@ namespace BehdadNematiFinalWebProject.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "EmailIndex",
+                name: "UserNameIndex",
                 table: "AspNetUsers",
-                column: "NormalizedEmail",
+                column: "NormalizedUserName",
                 unique: true,
-                filter: "[NormalizedEmail] IS NOT NULL");
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_images_Product_Id",

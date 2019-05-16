@@ -36,6 +36,17 @@ namespace BehdadNematiFinalWebProject.Hubs
                .SendAsync("RecivePartnerCredentials", AdminsLst.FirstOrDefault().FirstName,AdminsLst.FirstOrDefault().Email);
                 //get random available admin later
         }
+        public async Task RegisterAdmin(string userEmail)
+        {
+            var user = await userManager.GetUserAsync(contextAccessor.HttpContext.User);
+            user.SignalRConnectionId = Context.ConnectionId;
+            await userManager.UpdateAsync(user);
+
+
+            await Clients.Client(Context.ConnectionId)
+               .SendAsync("RecivePartnerCredentials", (await userManager.FindByEmailAsync(userEmail)).FirstName,userEmail);
+                //get random available admin later
+        }
         public override Task OnConnectedAsync()
         {
             return base.OnConnectedAsync();

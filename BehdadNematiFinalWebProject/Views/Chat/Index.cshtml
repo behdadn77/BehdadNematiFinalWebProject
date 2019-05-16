@@ -1,35 +1,11 @@
-﻿<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
 <div class="container col-md-10">
-    <div class="row">
-        <ul class="col">
-            <li>No Phone Number</li>
-            <li>No Email Address</li>
-        </ul>
-        <ul class="col">
-            <li>No Database</li>
-            <li>No Cookies</li>
-        </ul>
-        <ul class="col">
-            <li>No Conversation History</li>
-        </ul>
-    </div>
-    <br />
-    <div class="form-inline">
-        <div class="form-group" style="margin-right:10px; margin-bottom:10px;">
-            <label style="margin-right:6px;">Your Id:</label>
-            <input id="txtusrid" readonly="readonly" class="form-control" />
-        </div>
-        <div class="form-group" style="margin-right:10px;margin-bottom:10px;">
-            <label style="margin-right:6px;">Partner Id:</label>
-            <input id="txtpartnerid" class="form-control" />
-        </div>
-        <br />
-        <div class="form-group">
-            <label style="margin-right:6px;">Nickname:</label>
-            <input id="txtname" class="form-control" value="usr" />
-        </div>
-    </div>
-    <br />
     <div style=" padding:10px; margin-top:15px; margin-bottom:5px;">
         <div id="divmessages" style="border-color:#808080" class="container">
         </div>
@@ -49,16 +25,18 @@
 
         var connection = new signalR.HubConnectionBuilder()
             .withUrl("/ChatHub").build();
+        var partnerName;
+        var partnerUserName;
 
         connection.start().then(function () {
             console.log('Connected Successfully')
             connection.invoke("RegisterUser");
-            connection.on("ReciveUserId", function (userId) {
-                $(txtusrid).val(userId);
-            })
-
-            connection.on("SendMessageServerToClient", function (name, message) {
-                $(divmessages).append(`<div class="row" style="background-color:#ff6a00; height:40px;border-radius:4px;"><b>&nbsp ${name}: &nbsp</b>${message}</div><br />`)
+            connection.on("RecivePartnerCredentials", function (name, username) {
+                partnerName = name;
+                partnerUserName = username;
+            });
+            connection.on("SendMessageServerToUserClient", function (message) {
+                $(divmessages).append(`<div class="row" style="background-color:#ff6a00; height:40px;border-radius:4px;"><b>&nbsp ${partnerName}: &nbsp</b>${message}</div><br />`)
             })
 
         }).catch(function (err) { alert(err.toString()) })
@@ -69,11 +47,12 @@
             }
         })
         $(btnsend).click(function () {
-            connection.invoke("SendMessageClientToServer", $(txtpartnerid).val(),
-                $(txtname).val(), $(txtmessage).val());
+            connection.invoke("SendMessageUserClientToServer", $(txtmessage).val(), partnerUserName);
             $(divmessages).append(`<div class="row" style="background-color:#0094ff; height:40px;border-radius:4px;"><b>&nbsp Me: &nbsp</b>${$(txtmessage).val()}</div><br />`)
             $(txtmessage).val("");
         })
 
     })
 </script>
+
+

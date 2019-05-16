@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BehdadNematiFinalWebProject.Areas.Admin.Controllers
 {
-    public class ChatController : Controller
+    public class AdminChatController : Controller
     {
         public IActionResult Index()
         {
