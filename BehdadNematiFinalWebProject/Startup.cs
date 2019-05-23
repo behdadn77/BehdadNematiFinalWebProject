@@ -102,7 +102,7 @@ namespace BehdadNematiFinalWebProject
                     FirstName = "",
                     LastName = ""
                 };
-                var status = await userManager.CreateAsync(user, "wer");
+                var status = await userManager.CreateAsync(user, siteProperties.AdminInfo.adminpassword);
                 if (status.Succeeded == true)
                 {
                     await userManager.AddToRoleAsync(user, "admins");
