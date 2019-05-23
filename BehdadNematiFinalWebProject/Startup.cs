@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace BehdadNematiFinalWebProject
 {
@@ -38,11 +39,14 @@ namespace BehdadNematiFinalWebProject
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSignalR();
+            services.Configure<SitePropertiesViewModel>(Configuration.GetSection("SiteProperties"));
+            services.Configure<AdminInfo>(Configuration.GetSection("SiteProperties").GetSection("admininfo"));
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            IServiceProvider serviceProvider, IOptions<SitePropertiesViewModel> sitePropertiesViewModel)
         {
             if (env.IsDevelopment())
             {
@@ -70,6 +74,7 @@ namespace BehdadNematiFinalWebProject
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
             app.UseSignalR(r=>r.MapHub<ChatHub>("/ChatHub"));
+            InitializeDatabaseAndIdentity(serviceProvider, sitePropertiesViewModel.Value).Wait();
         }
         public async Task InitializeDatabaseAndIdentity(IServiceProvider serviceProvider
             , SitePropertiesViewModel siteProperties)
