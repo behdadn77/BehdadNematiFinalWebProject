@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -397,6 +398,26 @@ namespace BehdadNematiFinalWebProject.Migrations
                 name: "IX_TopProducts_Product_Id",
                 table: "TopProducts",
                 column: "Product_Id");
+            //added by me
+            List<string> BrandsLst = new List<string>() { "Ferrari", "Lambo", "BMW", "Ford" };
+            BrandsLst.ForEach(name => {
+                migrationBuilder.InsertData(
+                table: "Brands",
+                column: "Name",
+                value: name
+                );
+            }
+            );
+
+            List<string> TypeLst = new List<string>() { "Car" };
+            TypeLst.ForEach(name => {
+                migrationBuilder.InsertData(
+                table: "ProductTypes",
+                column: "Name",
+                value: name
+                );
+            }
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
