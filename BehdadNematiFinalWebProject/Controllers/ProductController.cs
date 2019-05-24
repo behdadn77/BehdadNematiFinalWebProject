@@ -26,7 +26,7 @@ namespace BehdadNematiFinalWebProject.Controllers
         public async Task<IActionResult> TopProductsItems()
         {
             //var Product = db.Products.Include(x => x.images).ToList();
-            var Products = db.TopProducts.Include(x => x.Product).ThenInclude(y=>y.images).ToList();
+            var Products = db.TopProducts.Include(x => x.Product).ToList();
             List<PurchaseCart_Product> userPurchCartPrdtProductLst = new List<PurchaseCart_Product>();
             if (User.Identity.Name != null)
             {
@@ -52,8 +52,8 @@ namespace BehdadNematiFinalWebProject.Controllers
                     IsAproved = item.Product.IsAproved,
                     ProductType_Id = item.Product.ProductType_Id,
                     Brand_Id = item.Product.Brand_Id,
-                    Images = item.Product.images,
                     ThumbnailImage = Convert.ToBase64String(item.Product.ThumbnailImage),
+                    Image = Convert.ToBase64String(item.Product.Image),
                     SelectedInCart = false
                 };
 
@@ -77,7 +77,7 @@ namespace BehdadNematiFinalWebProject.Controllers
 
         public async Task<IActionResult> ProductItems()
         {
-            var Products = db.Products.Include(x => x.images).ToList();
+            var Products = db.Products.ToList();
             List<PurchaseCart_Product> userPurchCartPrdtProductLst = new List<PurchaseCart_Product>();
             if (User.Identity.Name!=null)
             {
@@ -103,8 +103,8 @@ namespace BehdadNematiFinalWebProject.Controllers
                     IsAproved = item.IsAproved,
                     ProductType_Id = item.ProductType_Id,
                     Brand_Id = item.Brand_Id,
-                    Images=item.images,
                     ThumbnailImage = Convert.ToBase64String(item.ThumbnailImage),
+                    Image = Convert.ToBase64String(item.Image),
                     SelectedInCart =false
                 };
                 

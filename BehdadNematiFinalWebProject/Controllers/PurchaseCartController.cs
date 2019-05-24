@@ -33,7 +33,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                     (await GetPurchaseCartProductTotalPriceAsync()).ToString("C").Replace("/00", "");//currency
 
                     var PurchaseCartProducts = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == Purchscart.Id);
-                    return View(PurchaseCartProducts.Include(x => x.Product).Include(x => x.Product.images).ToList());
+                    return View(PurchaseCartProducts.Include(x => x.Product).ToList());
                 }
                 return View("Purchase cart not found!");
 

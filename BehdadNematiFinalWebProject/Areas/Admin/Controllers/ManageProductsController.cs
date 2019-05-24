@@ -62,46 +62,15 @@ namespace BehdadNematiFinalWebProject.Controllers
             if (model.Pictures.Count > 0)
             {
                 byte[] b = new byte[model.Pictures.FirstOrDefault().Length];
+                model.Pictures.FirstOrDefault().OpenReadStream().Read(b, 0, b.Length);
                 ImageThumbnailMaker imageThumbnailMaker = new ImageThumbnailMaker();
                 p.ThumbnailImage = imageThumbnailMaker.CreateThumbNail(Image.FromStream(new MemoryStream(b)));
+                p.Image = b;
             }
             db.Add(p);
             if (db.SaveChanges() != 0)
             {
-                foreach (var item in model.Pictures)
-                {
-                    if (item.Length <= 2 * Math.Pow(1024, 2))
-                    {
-                    }
-                    else
-                    {
-                        return View("one or more Images may not be valid!");
-                    }
-                    var filename = System.IO.Path.GetExtension(item.FileName).ToLower();
-                    if (filename == ".jpg" || filename == ".png")
-                    {
-                        byte[] b = new byte[item.Length];
-                        item.OpenReadStream().Read(b, 0, b.Length);
-                        image img = new image();
-                        img.Img = b;
-                        img.Product_Id = p.Id;
-                        db.images.Add(img);
-                    }
-                    else
-                    {
-                        return View("one or more Images may not be valid!");
-
-                    }
-                };
-                if (db.SaveChanges() != 0)
-                {
-                    return RedirectToAction("AddProduct");
-                }
-                else
-                {
-                    db.Products.Remove(p); //roll back
-                    db.SaveChanges();
-                }
+                return RedirectToAction("Productlist");
             }
             return View("Error!");
         }
@@ -109,15 +78,9 @@ namespace BehdadNematiFinalWebProject.Controllers
         //-------Edit Product-------//
         public IActionResult EditProduct(int id)
         {
-            //Product p = db.Products.Find(id);
-            Product p = db.Products.Include(x => x.images).Where(x => x.Id == id).First();
+            Product p = db.Products.Find(id);
             if (p != null)
             {
-                List<string> img = new List<string>();
-                foreach (var item in p.images)
-                {
-                    img.Add($"data:image;base64,{Convert.ToBase64String(item.Img)}");
-                }
                 ProductViewModel ProductViewModel = new ProductViewModel()
                 {
                     id = p.Id,
@@ -126,7 +89,8 @@ namespace BehdadNematiFinalWebProject.Controllers
                     Price = p.Price,
                     Brand_Id = p.Brand_Id,
                     ProductType_Id = p.ProductType_Id,
-                    ImagesBase64List = img
+                    ImageBase64 = $"data:image;base64,{Convert.ToBase64String(p.Image)}",
+                    thumbnailImageBase64 = $"data:image;base64,{Convert.ToBase64String(p.ThumbnailImage)}"
                 };
                 return View(ProductViewModel);
 
@@ -144,8 +108,10 @@ namespace BehdadNematiFinalWebProject.Controllers
             if (model.Pictures.Count > 0)
             {
                 byte[] b = new byte[model.Pictures.FirstOrDefault().Length];
+                model.Pictures.FirstOrDefault().OpenReadStream().Read(b, 0, b.Length);
                 ImageThumbnailMaker imageThumbnailMaker = new ImageThumbnailMaker();
                 p.ThumbnailImage = imageThumbnailMaker.CreateThumbNail(Image.FromStream(new MemoryStream(b)));
+                p.Image = b;
             }
             if (db.SaveChanges() != 0)
             {
@@ -194,7 +160,7 @@ namespace BehdadNematiFinalWebProject.Controllers
         }
         public List<Product> FindProductByBrandType(int TypeId, int BrandId)
         {
-            List<Product> p = db.Products.Include(x => x.images).Include(x => x.Brand).Include(x => x.ProductType).ToList();
+            List<Product> p = db.Products.Include(x => x.Brand).Include(x => x.ProductType).ToList();
             if (TypeId == 0 && BrandId == 0) //Brand and type are not specified
             {
                 return p;
@@ -227,11 +193,11 @@ namespace BehdadNematiFinalWebProject.Controllers
 
         //}
         //-----insert Brand----//
-        public IActionResult insertBrand()
+        public IActionResult InsertBrand()
         {
             return View();
         }
-        public IActionResult insertBrandConfirm(BrandViewModels models)
+        public IActionResult InsertBrandConfirm(BrandViewModels models)
         {
             Brand objBrand = new Brand()
             {

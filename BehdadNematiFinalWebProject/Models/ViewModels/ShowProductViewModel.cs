@@ -22,8 +22,9 @@ namespace BehdadNematiFinalWebProject.Models.ViewModels
         public ICollection<TopProducts> TopProducts { get; set; }
         public ICollection<SpecialOffers> SpecialOffers { get; set; }
         public ICollection<PurchaseCart_Product> PurchaseCart_Products { get; set; }
-        public ICollection<image> Images { get; set; }
+        //public ICollection<image> Images { get; set; }
         public bool SelectedInCart { get; set; }
         public string ThumbnailImage { get; set; }
+        public string Image { get; set; }
     }
 }

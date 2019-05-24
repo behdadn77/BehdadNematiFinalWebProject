@@ -22,6 +22,7 @@ namespace BehdadNematiFinalWebProject.Models.ViewModels
         public int ProductType_Id { get; set; }
         public List<IFormFile> Pictures { get; set; }
         public List<string> ImagesBase64List {get; set;}
-
+        public string ImageBase64 { get; set; }
+        public string thumbnailImageBase64 { get; set; }
     }
 }

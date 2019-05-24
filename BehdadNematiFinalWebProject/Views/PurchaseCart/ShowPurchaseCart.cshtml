@@ -41,10 +41,7 @@
                                 <td class="invert">@item.Product_Id</td>
                                 <td class="invert-image">
                                     <a href="single.html">
-                                        @foreach (var item2 in item.Product.images)
-                                        {
-                                            <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item2.Img)}")" alt=" " class="img-responsive">
-                                        }
+                                        <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.Product.ThumbnailImage)}")" alt=" " class="img-responsive">
                                     </a>
                                 </td>
                                 <td class="invert">
