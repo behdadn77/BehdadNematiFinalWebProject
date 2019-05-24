@@ -19,13 +19,14 @@
                     <div class="men-pro-i">
                         <div class="men-thumb-i">
                             @*@{
-                                    List<image> ImgLst = i.images.ToList();
-                                <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(ImgLst.First().img)}")" class="img-fluid">
-                                    }*@
-                            @foreach (var item in Model[j].Images)
-                            {
-                                <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.Img)}")" class="img-fluid" height="500" width="500">
-                            }
+            List<image> ImgLst = i.images.ToList();
+        <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(ImgLst.First().img)}")" class="img-fluid">
+            }*@
+                            @*@foreach (var item in Model[j].Images)
+        {
+            <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.Img)}")" class="img-fluid" height="500" width="500">
+        }*@
+                            <img src="@($"data:image/jpeg;base64,{Model[j].ThumbnailImage}")" class="img-fluid" height="500" width="500">
 
                             <div class="men-cart-pro">
                                 <div class="inner-men-cart-pro">

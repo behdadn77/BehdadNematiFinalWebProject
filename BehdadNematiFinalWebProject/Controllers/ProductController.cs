@@ -53,6 +53,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                     ProductType_Id = item.Product.ProductType_Id,
                     Brand_Id = item.Product.Brand_Id,
                     Images = item.Product.images,
+                    ThumbnailImage = Convert.ToBase64String(item.Product.ThumbnailImage),
                     SelectedInCart = false
                 };
 
@@ -103,7 +104,8 @@ namespace BehdadNematiFinalWebProject.Controllers
                     ProductType_Id = item.ProductType_Id,
                     Brand_Id = item.Brand_Id,
                     Images=item.images,
-                    SelectedInCart=false
+                    ThumbnailImage = Convert.ToBase64String(item.ThumbnailImage),
+                    SelectedInCart =false
                 };
                 
                 if (userPurchCartPrdtProductLst.Where(x => x.Product_Id == item.Id)!=null)
