@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using BehdadNematiFinalWebProject.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using BehdadNematiFinalWebProject.Areas.Identity.Data;
+using System.Drawing;
+using System.IO;
 
 namespace BehdadNematiFinalWebProject.Controllers
 {
@@ -47,20 +49,26 @@ namespace BehdadNematiFinalWebProject.Controllers
             return View();
         }
 
-        public IActionResult AddProductConfirm(ProductViewModel obj)
+        public IActionResult AddProductConfirm(ProductViewModel model)
         {
             Product p = new Product()
             {
-                EnglishName = obj.EnglishName,
-                Price = obj.Price,
-                Count = obj.Count,
-                ProductType_Id = obj.ProductType_Id,
-                Brand_Id = obj.Brand_Id
+                EnglishName = model.EnglishName,
+                Price = model.Price,
+                Count = model.Count,
+                ProductType_Id = model.ProductType_Id,
+                Brand_Id = model.Brand_Id
             };
+            if (model.Pictures.Count > 0)
+            {
+                byte[] b = new byte[model.Pictures.FirstOrDefault().Length];
+                ImageThumbnailMaker imageThumbnailMaker = new ImageThumbnailMaker();
+                p.ThumbnailImage = imageThumbnailMaker.CreateThumbNail(Image.FromStream(new MemoryStream(b)));
+            }
             db.Add(p);
             if (db.SaveChanges() != 0)
             {
-                foreach (var item in obj.Pictures)
+                foreach (var item in model.Pictures)
                 {
                     if (item.Length <= 2 * Math.Pow(1024, 2))
                     {
@@ -125,14 +133,20 @@ namespace BehdadNematiFinalWebProject.Controllers
             }
             return View("Product not found!");
         }
-        public IActionResult EditProductConfirm(ProductViewModel obj)
+        public IActionResult EditProductConfirm(ProductViewModel model)
         {
-            Product p = db.Products.Find(obj.id);
-            p.EnglishName = obj.EnglishName;
-            p.Brand_Id = obj.Brand_Id;
-            p.ProductType_Id = obj.ProductType_Id;
-            p.Count = obj.Count;
-            p.Price = obj.Price;
+            Product p = db.Products.Find(model.id);
+            p.EnglishName = model.EnglishName;
+            p.Brand_Id = model.Brand_Id;
+            p.ProductType_Id = model.ProductType_Id;
+            p.Count = model.Count;
+            p.Price = model.Price;
+            if (model.Pictures.Count > 0)
+            {
+                byte[] b = new byte[model.Pictures.FirstOrDefault().Length];
+                ImageThumbnailMaker imageThumbnailMaker = new ImageThumbnailMaker();
+                p.ThumbnailImage = imageThumbnailMaker.CreateThumbNail(Image.FromStream(new MemoryStream(b)));
+            }
             if (db.SaveChanges() != 0)
             {
                 return RedirectToAction("ProductList");

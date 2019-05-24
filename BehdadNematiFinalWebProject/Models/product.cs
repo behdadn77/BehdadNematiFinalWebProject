@@ -24,5 +24,6 @@ namespace BehdadNematiFinalWebProject.Models
         public ICollection<SpecialOffers> SpecialOffers { get; set; }
         public ICollection<PurchaseCart_Product> PurchaseCart_Products { get; set; }
         public ICollection<image> images { get; set; }
+        public byte[] ThumbnailImage { get; set; }
     }
 }
