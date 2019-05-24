@@ -79,15 +79,15 @@ namespace BehdadNematiFinalWebProject.Controllers
         {
             var Products = db.Products.ToList();
             List<PurchaseCart_Product> userPurchCartPrdtProductLst = new List<PurchaseCart_Product>();
-            if (User.Identity.Name!=null)
+            if (User.Identity.Name != null)
             {
                 var user = await userManager.FindByNameAsync(User.Identity.Name);
                 if (user != null)
                 {
                     var userPurchCart = db.PurchaseCarts.Where(x => x.User_Id == user.Id && x.IsPaid == false).ToList();
-                    if (userPurchCart.Count>0)
+                    if (userPurchCart.Count > 0)
                     {
-                         userPurchCartPrdtProductLst = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == userPurchCart.Last().Id).ToList();
+                        userPurchCartPrdtProductLst = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == userPurchCart.Last().Id).ToList();
                     }
                 }
             }
@@ -103,16 +103,16 @@ namespace BehdadNematiFinalWebProject.Controllers
                     IsAproved = item.IsAproved,
                     ProductType_Id = item.ProductType_Id,
                     Brand_Id = item.Brand_Id,
-                    ThumbnailImage = Convert.ToBase64String(item.ThumbnailImage),
-                    Image = Convert.ToBase64String(item.Image),
-                    SelectedInCart =false
+                    ThumbnailImage = item.ThumbnailImage != null ? Convert.ToBase64String(item.ThumbnailImage) : null,
+                    Image = item.Image != null ? Convert.ToBase64String(item.Image) : null,
+                    SelectedInCart = false
                 };
-                
-                if (userPurchCartPrdtProductLst.Where(x => x.Product_Id == item.Id)!=null)
+
+                if (userPurchCartPrdtProductLst.Where(x => x.Product_Id == item.Id) != null)
                 {
-                    if (userPurchCartPrdtProductLst.Where(x => x.Product_Id == item.Id).ToList().Count>0)
+                    if (userPurchCartPrdtProductLst.Where(x => x.Product_Id == item.Id).ToList().Count > 0)
                     {
-                        p.SelectedInCart = true;    
+                        p.SelectedInCart = true;
                     }
                 }
                 ProductLst.Add(p);
