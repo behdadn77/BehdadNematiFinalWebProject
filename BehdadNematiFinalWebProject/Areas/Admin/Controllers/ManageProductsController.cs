@@ -72,7 +72,7 @@ namespace BehdadNematiFinalWebProject.Controllers
             {
                 return RedirectToAction("Productlist");
             }
-            return View("Error!");
+            return Json("Error!");
         }
 
         //-------Edit Product-------//
@@ -95,7 +95,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                 return View(ProductViewModel);
 
             }
-            return View("Product not found!");
+            return Json("Product not found!");
         }
         public IActionResult EditProductConfirm(ProductViewModel model)
         {

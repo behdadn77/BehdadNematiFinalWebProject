@@ -35,7 +35,7 @@ namespace BehdadNematiFinalWebProject.Controllers
                     var PurchaseCartProducts = db.PurchaseCart_Products.Where(x => x.PurchaseCart_Id == Purchscart.Id);
                     return View(PurchaseCartProducts.Include(x => x.Product).ToList());
                 }
-                return View("Purchase cart not found!");
+                return Json("No Items");
 
             }
             return RedirectToAction("login", "Account");
