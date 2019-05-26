@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BehdadNematiFinalWebProject.Migrations
+namespace Shop.Migrations
 {
     public partial class m1 : Migration
     {

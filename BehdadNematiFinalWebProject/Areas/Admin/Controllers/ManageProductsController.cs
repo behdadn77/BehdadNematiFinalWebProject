@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BehdadNematiFinalWebProject.Models;
+using Shop.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BehdadNematiFinalWebProject.Models.ViewModels;
+using Shop.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
-using BehdadNematiFinalWebProject.Areas.Identity.Data;
+using Shop.Areas.Identity.Data;
 using System.Drawing;
 using System.IO;
 
-namespace BehdadNematiFinalWebProject.Controllers
+namespace Shop.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "admins")]

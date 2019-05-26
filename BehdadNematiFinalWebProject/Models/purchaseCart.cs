@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using BehdadNematiFinalWebProject.Areas.Identity.Data;
+using Shop.Areas.Identity.Data;
 
-namespace BehdadNematiFinalWebProject.Models
+namespace Shop.Models
 {
     public class PurchaseCart
     {

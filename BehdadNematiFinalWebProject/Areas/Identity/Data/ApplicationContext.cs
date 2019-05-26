@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BehdadNematiFinalWebProject.Areas.Identity.Data;
+using Shop.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using BehdadNematiFinalWebProject.Models;
+using Shop.Models;
 
-namespace BehdadNematiFinalWebProject.Models
+namespace Shop.Models
 {
     public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {

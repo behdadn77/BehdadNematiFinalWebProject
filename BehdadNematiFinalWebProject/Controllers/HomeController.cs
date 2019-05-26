@@ -5,10 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using BehdadNematiFinalWebProject.Areas.Identity.Data;
-using BehdadNematiFinalWebProject.Models;
+using Shop.Areas.Identity.Data;
+using Shop.Models;
 
-namespace BehdadNematiFinalWebProject.Controllers
+namespace Shop.Controllers
 {
     
     public class HomeController : Controller

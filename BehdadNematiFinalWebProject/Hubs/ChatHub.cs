@@ -1,5 +1,5 @@
-﻿using BehdadNematiFinalWebProject.Areas.Identity.Data;
-using BehdadNematiFinalWebProject.Models;
+﻿using Shop.Areas.Identity.Data;
+using Shop.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BehdadNematiFinalWebProject.Hubs
+namespace Shop.Hubs
 {
     public class ChatHub : Hub
     {

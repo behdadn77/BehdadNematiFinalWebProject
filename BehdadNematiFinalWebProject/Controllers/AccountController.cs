@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BehdadNematiFinalWebProject.Areas.Identity.Data;
-using BehdadNematiFinalWebProject.Models.ViewModels;
+using Shop.Areas.Identity.Data;
+using Shop.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace BehdadNematiFinalWebProject.Controllers
+namespace Shop.Controllers
 {
     public class AccountController : Controller
     {

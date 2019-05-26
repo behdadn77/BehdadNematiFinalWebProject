@@ -1,6 +1,6 @@
 using System;
 
-namespace BehdadNematiFinalWebProject.Models
+namespace Shop.Models
 {
     public class ErrorViewModel
     {

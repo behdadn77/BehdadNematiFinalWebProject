@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BehdadNematiFinalWebProject.Controllers
+namespace Shop.Controllers
 {
     public class ChatController : Controller
     {

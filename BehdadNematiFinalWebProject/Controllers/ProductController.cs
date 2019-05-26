@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BehdadNematiFinalWebProject.Areas.Identity.Data;
-using BehdadNematiFinalWebProject.Models;
-using BehdadNematiFinalWebProject.Models.ViewModels;
+using Shop.Areas.Identity.Data;
+using Shop.Models;
+using Shop.Models.ViewModels;
 
-namespace BehdadNematiFinalWebProject.Controllers
+namespace Shop.Controllers
 {
     public class ProductController : Controller
     {

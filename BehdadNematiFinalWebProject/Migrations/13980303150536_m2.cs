@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BehdadNematiFinalWebProject.Migrations
+namespace Shop.Migrations
 {
     public partial class m2 : Migration
     {

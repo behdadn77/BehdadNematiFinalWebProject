@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BehdadNematiFinalWebProject.Areas.Admin.Controllers
+namespace Shop.Areas.Admin.Controllers
 {
     public class AdminChatController : Controller
     {

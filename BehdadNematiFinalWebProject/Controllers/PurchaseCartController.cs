@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using BehdadNematiFinalWebProject.Areas.Identity.Data;
+using Shop.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
-using BehdadNematiFinalWebProject.Models;
+using Shop.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace BehdadNematiFinalWebProject.Controllers
+namespace Shop.Controllers
 {
     public class PurchaseCartController : Controller
     {
